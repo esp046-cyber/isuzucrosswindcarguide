@@ -1,10 +1,5 @@
 {
   "status": "static-offline-ready",
   "url": "https://esp046-cyber.github.io/isuzucrosswindcarguide/",
-  "totalParts": 26,
-  "engines": [
-    "4JA1",
-    "4JA1-T",
-    "4JK1-TC"
-  ]
+  "totalParts": 26
 }
