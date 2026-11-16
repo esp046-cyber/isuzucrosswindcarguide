@@ -1,0 +1,11 @@
+{
+  "name": "isuzu-crosswind-maintenance-pwa",
+  "version": "1.0.0",
+  "description": "Mobile-first offline PWA for Isuzu Crosswind maintenance schedules, parts catalog, and Claude.ai prompt generation.",
+  "private": true,
+  "scripts": {
+    "start": "npx serve .",
+    "test": "node tests/validate-pwa.js"
+  },
+  "license": "MIT"
+}
