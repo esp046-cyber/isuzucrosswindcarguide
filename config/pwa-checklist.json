@@ -1,0 +1,7 @@
+{
+  "touchTargetsMinPx": 44,
+  "wcagContrast": "AA",
+  "safeAreaInsets": true,
+  "offlineFirst": true,
+  "zeroBuildStep": true
+}
