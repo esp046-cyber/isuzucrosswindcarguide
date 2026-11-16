@@ -1,8 +1,4 @@
 {
   "canonicalUrl": "https://esp046-cyber.github.io/isuzucrosswindcarguide/",
-  "touchTargetsMinPx": 44,
-  "wcagContrast": "AA",
-  "safeAreaInsets": true,
-  "offlineFirst": true,
-  "zeroBuildStep": true
+  "version": "3.0.0"
 }
