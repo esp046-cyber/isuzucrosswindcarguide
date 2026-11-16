@@ -1,8 +1,7 @@
 {
   "name": "isuzucrosswindcarguide-pwa",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "homepage": "https://esp046-cyber.github.io/isuzucrosswindcarguide/",
-  "description": "Mobile-first offline PWA for Isuzu Crosswind maintenance schedules, parts catalog, and personal service log.",
   "private": true,
   "scripts": {
     "start": "npx serve .",

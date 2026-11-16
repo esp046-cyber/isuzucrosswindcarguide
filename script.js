@@ -135,7 +135,6 @@ const PARTS_CATALOG = [
   { name: "Alternator with Rear Vacuum Pump (70A–90A)", code: "8-97189113-0", system: "Electrical & Glow Plugs", spec: "12V IC Regulator + Brake Booster Pump", notes: "Check vacuum pump oil hose for cracks (loss of brake assist if hose splits)." }
 ];
 
-// State Management
 let state = {
   version: localStorage.getItem("cw_version") || "all",
   interval: "all",
@@ -145,7 +144,6 @@ let state = {
   theme: localStorage.getItem("cw_theme") || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light")
 };
 
-// DOM References
 const versionSelect = document.getElementById("versionSelect");
 const checklistContainer = document.getElementById("checklistContainer");
 const versionsContainer = document.getElementById("versionsContainer");
@@ -166,7 +164,6 @@ function showToast(msg) {
   window.__toastTimer = setTimeout(() => toastEl.classList.remove("show"), 2600);
 }
 
-// Onboarding Banner
 if (!state.onboarded) {
   onboardingBanner.classList.remove("hidden");
 }
@@ -176,7 +173,6 @@ document.getElementById("dismissOnboardingBtn").addEventListener("click", () => 
   onboardingBanner.classList.add("hidden");
 });
 
-// Theme Handling
 function applyTheme(theme) {
   document.documentElement.setAttribute("data-theme", theme);
   localStorage.setItem("cw_theme", theme);
@@ -189,7 +185,6 @@ document.getElementById("themeToggle").addEventListener("click", () => {
   showToast(`Switched to ${state.theme} mode`);
 });
 
-// Version Selection
 versionSelect.value = state.version;
 versionSelect.addEventListener("change", (e) => {
   state.version = e.target.value;
@@ -198,7 +193,6 @@ versionSelect.addEventListener("change", (e) => {
   renderVersions();
 });
 
-// Render Checklists
 function renderChecklists() {
   const filtered = MAINTENANCE_CHECKLISTS.filter(group => {
     const matchInterval = state.interval === "all" || group.interval === state.interval;
@@ -262,7 +256,6 @@ document.getElementById("resetChecklistBtn").addEventListener("click", () => {
   showToast("All checklist items reset.");
 });
 
-// Interval Pills
 document.querySelectorAll(".pill").forEach(btn => {
   btn.addEventListener("click", () => {
     document.querySelectorAll(".pill").forEach(p => {
@@ -276,7 +269,6 @@ document.querySelectorAll(".pill").forEach(btn => {
   });
 });
 
-// Render All Versions
 function renderVersions() {
   const list = state.version === "all"
     ? CROSSWIND_VERSIONS
@@ -295,7 +287,6 @@ function renderVersions() {
   `).join("");
 }
 
-// Render Parts Catalog
 const partSearchInput = document.getElementById("partSearchInput");
 const partCategoryFilter = document.getElementById("partCategoryFilter");
 
@@ -334,7 +325,6 @@ function renderParts() {
 partSearchInput.addEventListener("input", renderParts);
 partCategoryFilter.addEventListener("change", renderParts);
 
-// Service Log Management
 const logDateInput = document.getElementById("logDate");
 if (logDateInput) {
   logDateInput.value = new Date().toISOString().split("T")[0];
@@ -398,7 +388,6 @@ document.getElementById("clearLogsBtn").addEventListener("click", () => {
   showToast("Service log history cleared.");
 });
 
-// Navigation & Deep-Link Hash Routing
 function switchView(viewName, updateHash = true) {
   const validViews = ["checklists", "versions", "parts", "servicelog"];
   const target = validViews.includes(viewName) ? viewName : "checklists";
@@ -430,7 +419,6 @@ window.addEventListener("hashchange", () => {
   if (hashView) switchView(hashView, false);
 });
 
-// PWA Install Prompt & Offline Status
 let deferredPrompt;
 const installBtn = document.getElementById("installBtn");
 
@@ -456,14 +444,16 @@ function updateOnlineStatus() {
 window.addEventListener("online", updateOnlineStatus);
 window.addEventListener("offline", updateOnlineStatus);
 
-// Register Service Worker
+// Register Service Worker v3 & purge any old v1/v2 caches
 if ("serviceWorker" in navigator) {
-  window.addEventListener("load", () => {
-    navigator.serviceWorker.register("./service-worker.js").catch(() => {});
+  window.addEventListener("load", async () => {
+    try {
+      const reg = await navigator.serviceWorker.register("./service-worker.js?v=3");
+      reg.update();
+    } catch (err) {}
   });
 }
 
-// Initial Render
 renderChecklists();
 renderVersions();
 renderParts();

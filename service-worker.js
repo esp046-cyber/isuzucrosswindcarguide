@@ -1,14 +1,14 @@
-const CACHE_NAME = "isuzu-crosswind-guide-v2.0.0";
+const CACHE_NAME = "isuzu-crosswind-guide-v3.0.0";
 const ASSETS_TO_CACHE = [
   "./",
   "./index.html",
-  "./style.css",
-  "./script.js",
-  "./manifest.json",
+  "./style.css?v=3",
+  "./script.js?v=3",
+  "./manifest.json?v=3",
   "./offline.html",
-  "./favicon.ico",
-  "./icon-192.png",
-  "./icon-512.png",
+  "./favicon.ico?v=3",
+  "./icon-192.png?v=3",
+  "./icon-512.png?v=3",
   "./assets/og-image.png"
 ];
 
@@ -30,20 +30,25 @@ self.addEventListener("activate", (event) => {
 
 self.addEventListener("fetch", (event) => {
   if (event.request.method !== "GET") return;
+  if (event.request.mode === "navigate") {
+    event.respondWith(
+      fetch(event.request)
+        .then((res) => {
+          const copy = res.clone();
+          caches.open(CACHE_NAME).then((cache) => cache.put("./index.html", copy));
+          return res;
+        })
+        .catch(() => caches.match("./index.html").then((r) => r || caches.match("./offline.html")))
+    );
+    return;
+  }
   event.respondWith(
     caches.match(event.request).then((cached) => {
-      if (cached) return cached;
-      return fetch(event.request)
-        .then((response) => {
-          const copy = response.clone();
-          caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy));
-          return response;
-        })
-        .catch(() => {
-          if (event.request.mode === "navigate") {
-            return caches.match("./offline.html");
-          }
-        });
+      return cached || fetch(event.request).then((response) => {
+        const copy = response.clone();
+        caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy));
+        return response;
+      });
     })
   );
 });

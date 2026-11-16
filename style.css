@@ -97,7 +97,6 @@ body {
   display: none !important;
 }
 
-/* Header & Safe Area */
 .app-header {
   position: sticky;
   top: 0;
@@ -170,7 +169,6 @@ body {
   gap: var(--space-2);
 }
 
-/* Touch-Friendly Buttons & Inputs (>= 44x44px) */
 .btn {
   min-height: 44px;
   min-width: 44px;
@@ -261,7 +259,6 @@ body {
   color: var(--warning);
 }
 
-/* Main Layout */
 .app-main {
   max-width: 1200px;
   margin: 0 auto;
@@ -345,7 +342,6 @@ body {
   color: var(--text-muted);
 }
 
-/* Desktop & Tablet Tab Navigation */
 .tab-nav {
   display: none;
   gap: var(--space-2);
@@ -377,7 +373,6 @@ body {
   color: var(--primary);
 }
 
-/* View Transition */
 .view-section {
   animation: fadeIn 180ms ease;
 }
@@ -387,7 +382,6 @@ body {
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* Filter Pills */
 .filter-pills {
   display: flex;
   gap: var(--space-2);
@@ -417,7 +411,6 @@ body {
   color: #FFFFFF;
 }
 
-/* Cards & Lists */
 .cards-grid {
   display: grid;
   grid-template-columns: 1fr;
@@ -507,7 +500,6 @@ body {
   margin-top: 2px;
 }
 
-/* Parts Directory */
 .search-toolbar {
   display: grid;
   grid-template-columns: 1fr;
@@ -542,7 +534,6 @@ body {
   font-weight: 700;
 }
 
-/* Service Log Form */
 .log-form {
   display: flex;
   flex-direction: column;
@@ -563,7 +554,6 @@ body {
   margin-top: var(--space-1);
 }
 
-/* Mobile Bottom Nav */
 .bottom-nav {
   position: fixed;
   bottom: 0;
@@ -603,7 +593,6 @@ body {
   font-size: 1.125rem;
 }
 
-/* Toast Notification */
 .toast {
   position: fixed;
   bottom: calc(76px + env(safe-area-inset-bottom));
@@ -627,7 +616,6 @@ body {
   transform: translateX(-50%) translateY(0);
 }
 
-/* Responsive Breakpoints */
 @media (min-width: 768px) {
   body {
     padding-bottom: var(--space-6);
