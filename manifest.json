@@ -1,7 +1,7 @@
 {
-  "name": "Isuzu Crosswind Maintenance & Parts Guide",
-  "short_name": "Crosswind Guide",
-  "description": "Complete Isuzu Crosswind maintenance guide (2001\u20132017 all versions), PMS checklists, full OEM/replacement parts catalog, and personal service log.",
+  "name": "Crosswind Garage \u2014 Complete Maintenance & Parts Guide",
+  "short_name": "Crosswind Garage",
+  "description": "Complete Isuzu Crosswind maintenance guide (2001\u20132017), 5,000 km PMS reminders, parts compatibility finder, repair cost tracker, fuel calculator, and JSON backup.",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",

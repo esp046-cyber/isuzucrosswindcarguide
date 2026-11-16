@@ -10,45 +10,51 @@
   <meta name="theme-color" content="#0F172A" media="(prefers-color-scheme: dark)" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <meta name="apple-mobile-web-app-title" content="Crosswind Guide" />
-  <meta name="description" content="Complete Isuzu Crosswind Maintenance Guide (2001–2017 All Versions: XL, XT, XTO, XTi, XUV, XUVi, Sportivo, Sportivo X). Interactive checklists, PMS schedules, parts catalog, and personal service log." />
+  <meta name="apple-mobile-web-app-title" content="Crosswind Garage" />
+  <meta name="description" content="Crosswind Garage: Complete Isuzu Crosswind Maintenance & Parts Guide (2001–2017). PMS reminders, parts compatibility checker, repair cost tracker, troubleshooting, fuel calculator, and JSON backup." />
   <link rel="canonical" href="https://esp046-cyber.github.io/isuzucrosswindcarguide/" />
 
   <!-- Open Graph / Social Media Meta Tags -->
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://esp046-cyber.github.io/isuzucrosswindcarguide/" />
-  <meta property="og:title" content="Isuzu Crosswind Master Maintenance & Parts Guide (All Versions)" />
-  <meta property="og:description" content="First check, monthly, quarterly & mileage PMS checklists, fluids, torque specs, service log, and complete Isuzu Crosswind parts catalog (4JA1, 4JA1-T, 4JK1-TC)." />
+  <meta property="og:title" content="Crosswind Garage — Complete Maintenance & Parts Guide (2001–2017)" />
+  <meta property="og:description" content="Maintenance dashboard, 5,000 km PMS reminders, OEM parts compatibility finder, repair cost tracker, diesel troubleshooting, fuel km/L calculator, and offline JSON backup." />
   <meta property="og:image" content="https://esp046-cyber.github.io/isuzucrosswindcarguide/assets/og-image.png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Isuzu Crosswind Maintenance & Parts Guide" />
-  <meta name="twitter:description" content="Offline-ready maintenance guide, PMS checklists & full parts directory for all Isuzu Crosswind models." />
+  <meta name="twitter:title" content="Crosswind Garage — Complete Maintenance & Parts Guide" />
+  <meta name="twitter:description" content="Complete offline-ready maintenance & parts PWA for all Isuzu Crosswind models (2001–2017)." />
   <meta name="twitter:image" content="https://esp046-cyber.github.io/isuzucrosswindcarguide/assets/og-image.png" />
 
-  <title>Isuzu Crosswind Maintenance & Parts Guide</title>
-  <link rel="manifest" href="./manifest.json?v=3" />
-  <link rel="icon" href="./favicon.ico?v=3" sizes="any" />
-  <link rel="apple-touch-icon" href="./icon-192.png?v=3" />
-  <link rel="stylesheet" href="./style.css?v=3" />
+  <title>Crosswind Garage — Complete Maintenance & Parts Guide</title>
+  <link rel="manifest" href="./manifest.json?v=4" />
+  <link rel="icon" href="./favicon.ico?v=4" sizes="any" />
+  <link rel="apple-touch-icon" href="./icon-192.png?v=4" />
+  <link rel="stylesheet" href="./style.css?v=4" />
 </head>
 <body>
   <a href="#main-content" class="skip-link">Skip to main content</a>
 
+  <!-- Update Available Banner -->
+  <div id="updateBanner" class="update-banner hidden" role="status" aria-live="polite">
+    <span>New Crosswind Garage update available!</span>
+    <button id="reloadAppBtn" class="btn btn-primary btn-sm">Refresh Now</button>
+  </div>
+
   <header class="app-header">
     <div class="header-inner">
       <div class="brand">
-        <div class="brand-badge" aria-hidden="true">IC</div>
+        <div class="brand-badge" aria-hidden="true">🚙</div>
         <div>
-          <h1 class="brand-title">Isuzu Crosswind</h1>
-          <p class="brand-sub">Master Maintenance &amp; Parts Guide (2001–2017)</p>
+          <h1 class="brand-title">Crosswind Garage</h1>
+          <p class="brand-sub">COMPLETE MAINTENANCE &amp; PARTS GUIDE</p>
         </div>
       </div>
 
       <div class="header-actions">
         <button id="installBtn" class="btn btn-primary btn-sm hidden" aria-label="Install App">
-          <span>+ Install App</span>
+          <span>+ Install</span>
         </button>
         <button id="themeToggle" class="btn btn-ghost btn-icon" aria-label="Toggle dark or light theme" title="Toggle Theme">
           <span id="themeIcon" aria-hidden="true">🌓</span>
@@ -56,63 +62,101 @@
       </div>
     </div>
 
-    <!-- Version Selector Strip -->
-    <div class="version-bar" role="region" aria-label="Vehicle Version Filter">
-      <label for="versionSelect" class="sr-only">Select Crosswind Variant</label>
+    <!-- Select your Crosswind Strip -->
+    <div class="version-bar" role="region" aria-label="Select your Crosswind">
+      <label for="versionSelect" class="sr-only">Select your Crosswind (2001–2017 · Engine · Variant)</label>
       <select id="versionSelect" class="select-control">
-        <option value="all">All Versions (2001–2017 Complete Guide)</option>
-        <option value="gen1">Gen 1 (2001–2004): XL, XT, XTO, XUV, XUVi (4JA1 / 4JA1-T)</option>
-        <option value="gen2">Gen 2 (2005–2009): Sportivo, XTi, XT, XL (4JA1-T Direct Injection)</option>
-        <option value="gen3">Gen 3 (2010–2014): Sportivo X, XUV, XT, XL (4JA1-T Euro 2)</option>
-        <option value="gen4">Gen 4 (2015–2017): Sportivo X, XUV, XT, XL (4JK1-TC / 4JA1-L Euro 4)</option>
+        <option value="all">Select your Crosswind: All Models (2001–2017 · 4JA1 / 4JA1-T / 4JK1-TC)</option>
+        <option value="gen1_na">2001–2004 · 4JA1 2.5L NA · XL / XT (M/T)</option>
+        <option value="gen1_turbo">2001–2004 · 4JA1-T 2.5L Turbo · XTO / XUV / XUVi (M/T &amp; A/T)</option>
+        <option value="gen2">2005–2009 · 4JA1-T 2.5L Turbo · Sportivo / XTi / XT / XL (M/T &amp; A/T)</option>
+        <option value="gen3">2010–2014 · 4JA1-T 2.5L Euro 2 · Sportivo X / XUV / XT / XL (M/T &amp; A/T)</option>
+        <option value="gen4">2015–2017 · 4JA1-L / 4JK1-TC Euro 4 · Sportivo X / XUV / XT / XL</option>
       </select>
       <div id="offlineBadge" class="status-pill online" role="status" aria-live="polite">Online</div>
     </div>
   </header>
 
   <main id="main-content" class="app-main">
-    <!-- First-Time Onboarding Banner (Dismissible) -->
-    <aside id="onboardingBanner" class="onboarding-card hidden" aria-label="Quick Start Tip">
+    <!-- Dismissible First-Run Onboarding -->
+    <aside id="onboardingBanner" class="onboarding-card hidden" aria-label="Quick Start Guide">
       <div class="onboarding-content">
-        <strong>Welcome to your Crosswind Garage Guide!</strong>
-        <p class="muted-text">Select your Crosswind generation above, check off PMS tasks offline, look up OEM part numbers, or log your oil changes in <strong>Service Log</strong>.</p>
+        <strong>Welcome to Crosswind Garage Pro!</strong>
+        <p class="muted-text">Set your current odometer below to track your <strong>Next Maintenance (5,000 km)</strong>, log expenses, check parts compatibility, and export JSON/PDF backups.</p>
       </div>
-      <button id="dismissOnboardingBtn" class="btn btn-outline btn-sm" aria-label="Dismiss welcome tip">Got it</button>
+      <button id="dismissOnboardingBtn" class="btn btn-outline btn-sm">Got it</button>
     </aside>
 
-    <!-- Progress Summary Banner -->
-    <section class="summary-card" aria-labelledby="progressHeading">
-      <div class="summary-top">
+    <!-- 1. MAINTENANCE DASHBOARD & PMS REMINDER SYSTEM -->
+    <section class="dashboard-panel" aria-labelledby="dashboardHeading">
+      <div class="dashboard-header">
         <div>
-          <h2 id="progressHeading" class="section-title">Maintenance Readiness</h2>
-          <p id="versionSummaryText" class="muted-text">Showing all Crosswind variants: 4JA1 Naturally Aspirated, 4JA1-T Turbo, &amp; 4JK1-TC.</p>
+          <h2 id="dashboardHeading" class="section-title">Maintenance Dashboard</h2>
+          <p id="selectedSpecSub" class="muted-text">2001–2017 · All Engines &amp; Variants</p>
+        </div>
+        <div class="odo-input-group">
+          <label for="currentOdoInput" class="sr-only">Current Odometer (km)</label>
+          <input type="number" id="currentOdoInput" class="input-control input-sm" placeholder="Current km" min="0" step="100" />
+          <button id="updateOdoBtn" class="btn btn-primary btn-sm">Update km</button>
+        </div>
+      </div>
+
+      <!-- KPI Metric Cards -->
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <span class="kpi-label">Last Service</span>
+          <strong class="kpi-value" id="kpiLastService">Not logged</strong>
+          <span class="kpi-sub" id="kpiLastDate">Log first service in History</span>
+        </div>
+        <div class="kpi-card highlight">
+          <span class="kpi-label">Next Maintenance</span>
+          <strong class="kpi-value" id="kpiNextMaintenance">5,000 km</strong>
+          <span class="kpi-sub" id="kpiDueStatus">Every 5,000 km / 3 months</span>
+        </div>
+        <div class="kpi-card">
+          <span class="kpi-label">Readiness Tasks</span>
+          <strong class="kpi-value" id="kpiReadinessCount">0 / 25</strong>
+          <span class="kpi-sub" id="kpiReadinessPct">0% checked</span>
+        </div>
+        <div class="kpi-card">
+          <span class="kpi-label">YTD Repair Spend</span>
+          <strong class="kpi-value" id="kpiYearlyCost">₱0</strong>
+          <span class="kpi-sub" id="kpiMonthlyCost">This month: ₱0</span>
+        </div>
+      </div>
+
+      <!-- Overdue / Upcoming Alert Banner -->
+      <div id="pmsAlertBox" class="alert-box info" role="status">
+        <span id="pmsAlertText">PMS Reminder: Enter your current odometer reading to calculate exact kilometers remaining until your next oil &amp; filter service.</span>
+      </div>
+
+      <!-- Readiness Progress Bar -->
+      <div class="progress-row">
+        <div class="progress-wrap" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="progressBarWrap">
+          <div class="progress-fill" id="progressFill" style="width: 0%"></div>
         </div>
         <button id="resetChecklistBtn" class="btn btn-outline btn-sm">Reset Checks</button>
       </div>
-      <div class="progress-wrap" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="progressBarWrap">
-        <div class="progress-fill" id="progressFill" style="width: 0%"></div>
-      </div>
-      <div class="summary-stats">
-        <span id="completedCount">0 / 0 tasks completed</span>
-        <span id="progressPercent">0%</span>
-      </div>
     </section>
 
-    <!-- View Navigation Tabs (Desktop & Tablet) -->
-    <nav class="tab-nav" role="tablist" aria-label="Main Sections">
-      <button class="tab-btn active" role="tab" data-view="checklists" aria-selected="true" aria-controls="view-checklists">Checklists</button>
-      <button class="tab-btn" role="tab" data-view="versions" aria-selected="false" aria-controls="view-versions">All Versions</button>
-      <button class="tab-btn" role="tab" data-view="parts" aria-selected="false" aria-controls="view-parts">Parts &amp; Materials</button>
-      <button class="tab-btn" role="tab" data-view="servicelog" aria-selected="false" aria-controls="view-servicelog">Service Log &amp; Specs</button>
+    <!-- 6-MODULE NAVIGATION BAR (Desktop & Mobile Scrollable / Bottom Nav) -->
+    <nav class="module-nav" role="tablist" aria-label="Garage Modules">
+      <button class="mod-btn active" role="tab" data-view="maintenance" aria-selected="true">Maintenance</button>
+      <button class="mod-btn" role="tab" data-view="parts" aria-selected="false">Parts Finder</button>
+      <button class="mod-btn" role="tab" data-view="history" aria-selected="false">Service History</button>
+      <button class="mod-btn" role="tab" data-view="costs" aria-selected="false">Cost &amp; Fuel</button>
+      <button class="mod-btn" role="tab" data-view="troubleshoot" aria-selected="false">Troubleshooting</button>
+      <button class="mod-btn" role="tab" data-view="specs" aria-selected="false">Specifications</button>
     </nav>
 
-    <!-- VIEW 1: MAINTENANCE CHECKLISTS -->
-    <section id="view-checklists" class="view-section active" role="tabpanel" aria-label="Maintenance Checklists">
-      <div class="filter-pills" role="group" aria-label="Interval Filter">
-        <button class="pill active" data-interval="all" aria-pressed="true">All Intervals</button>
+    <!-- MODULE 1: MAINTENANCE & INSPECTION CHECKLISTS -->
+    <section id="view-maintenance" class="view-section active" role="tabpanel" aria-label="Maintenance Checklists">
+      <div class="filter-pills" role="group" aria-label="Checklist Interval Filter">
+        <button class="pill active" data-interval="all" aria-pressed="true">All Checklists</button>
+        <button class="pill" data-interval="daily" aria-pressed="false">Daily &amp; Long-Trip</button>
         <button class="pill" data-interval="first" aria-pressed="false">First Check (1k–5k km)</button>
         <button class="pill" data-interval="monthly" aria-pressed="false">Monthly / BLOWBAGETS</button>
-        <button class="pill" data-interval="quarterly" aria-pressed="false">Quarterly (5k km / 3 Mo)</button>
+        <button class="pill" data-interval="quarterly" aria-pressed="false">Quarterly (5,000 km)</button>
         <button class="pill" data-interval="semi" aria-pressed="false">Semi-Annual (10k–20k km)</button>
         <button class="pill" data-interval="major" aria-pressed="false">Major PMS (40k–80k km)</button>
       </div>
@@ -120,148 +164,198 @@
       <div id="checklistContainer" class="cards-grid"></div>
     </section>
 
-    <!-- VIEW 2: ALL VERSIONS MATRIX -->
-    <section id="view-versions" class="view-section hidden" role="tabpanel" aria-label="Isuzu Crosswind Version History">
+    <!-- MODULE 2: PARTS FINDER & COMPATIBILITY CHECKER -->
+    <section id="view-parts" class="view-section hidden" role="tabpanel" aria-label="Parts Finder & Compatibility Checker">
       <div class="section-header">
-        <h2 class="section-heading">Isuzu Crosswind Complete Version Matrix (2001–2017)</h2>
-        <p class="muted-text">Detailed specifications, engine codes, transmission types, and variant-specific maintenance notes across all Philippine &amp; ASEAN releases.</p>
-      </div>
-      <div id="versionsContainer" class="cards-grid"></div>
-    </section>
-
-    <!-- VIEW 3: COMPLETE PARTS & MATERIALS CATALOG -->
-    <section id="view-parts" class="view-section hidden" role="tabpanel" aria-label="Complete Isuzu Crosswind Parts and Materials">
-      <div class="section-header">
-        <h2 class="section-heading">Complete Isuzu Crosswind Parts &amp; Materials Directory</h2>
-        <p class="muted-text">Searchable OEM part references, fluid capacities, filters, belts, suspension, brake, cooling, and electrical parts.</p>
+        <h2 class="section-heading">Parts Finder &amp; Compatibility Checker</h2>
+        <p class="muted-text">Filter by engine/generation and search OEM part numbers, Japanese replacement equivalents, and fluid capacities.</p>
       </div>
 
-      <div class="search-toolbar">
-        <input type="search" id="partSearchInput" class="input-control" placeholder="Search parts (e.g., Oil Filter, 8-97148270, Timing Gear, Ball Joint, ATF)..." aria-label="Search parts and materials" />
-        <select id="partCategoryFilter" class="select-control" aria-label="Filter by part system">
+      <div class="search-toolbar three-col">
+        <input type="search" id="partSearchInput" class="input-control" placeholder="Search part name or OEM # (e.g., 8-97148270-0, Vic C-512, Ball Joint)..." aria-label="Search parts" />
+        <select id="partEngineFilter" class="select-control" aria-label="Filter by Engine">
+          <option value="all">All Engines (4JA1 / 4JA1-T / 4JK1-TC)</option>
+          <option value="4JA1">4JA1 2.5L Naturally Aspirated (2001–2004)</option>
+          <option value="4JA1-T">4JA1-T 2.5L Turbo Direct Injection (2001–2017)</option>
+          <option value="4JK1-TC">4JK1-TC 2.5L VGS CRDi Euro 4 (2015–2017)</option>
+        </select>
+        <select id="partCategoryFilter" class="select-control" aria-label="Filter by System">
           <option value="all">All Systems</option>
           <option value="Fluids & Lubricants">Fluids &amp; Lubricants</option>
           <option value="Filters">Filters (Oil, Fuel, Air, Cabin)</option>
-          <option value="Engine & Valvetrain">Engine &amp; Valvetrain (4JA1 / 4JK1)</option>
+          <option value="Engine & Valvetrain">Engine &amp; Valvetrain</option>
           <option value="Cooling System">Cooling System</option>
           <option value="Brakes & Wheel Bearings">Brakes &amp; Wheel Bearings</option>
           <option value="Suspension & Steering">Suspension &amp; Steering</option>
           <option value="Drivetrain & Clutch">Drivetrain, Clutch &amp; Transmission</option>
-          <option value="Electrical & Glow Plugs">Electrical, Alternator &amp; Glow Plugs</option>
+          <option value="Electrical & Glow Plugs">Electrical &amp; Glow Plugs</option>
         </select>
       </div>
 
       <div id="partsContainer" class="parts-list"></div>
     </section>
 
-    <!-- VIEW 4: SERVICE LOG & QUICK TORQUE/FLUID REFERENCE -->
-    <section id="view-servicelog" class="view-section hidden" role="tabpanel" aria-label="Personal Service Log and Quick Specs">
-      <div class="section-header">
-        <h2 class="section-heading">Personal Service Log &amp; Workshop Specs</h2>
-        <p class="muted-text">Record your Crosswind's oil changes, PMS dates, and odometer readings offline, plus quick reference torque and fluid capacities.</p>
+    <!-- MODULE 3: SERVICE HISTORY, BACKUP/RESTORE & PDF REPORT -->
+    <section id="view-history" class="view-section hidden" role="tabpanel" aria-label="Service History & Backup">
+      <div class="section-header row-between">
+        <div>
+          <h2 class="section-heading">Vehicle Maintenance History &amp; Backup</h2>
+          <p class="muted-text">Log completed PMS, parts replaced, and labor/parts costs. Export PDF reports or JSON backups anytime.</p>
+        </div>
+        <div class="action-cluster">
+          <button id="exportPdfBtn" class="btn btn-outline btn-sm">Print / PDF Report</button>
+          <button id="exportJsonBtn" class="btn btn-outline btn-sm">Export JSON Backup</button>
+          <label class="btn btn-outline btn-sm" for="importJsonInput" tabindex="0">Import JSON</label>
+          <input type="file" id="importJsonInput" accept="application/json" class="sr-only" />
+        </div>
       </div>
 
-      <div class="cards-grid" style="margin-bottom: 16px;">
+      <article class="card" style="margin-bottom: 16px;">
+        <div class="card-header">
+          <h3 class="card-title">Add Maintenance / Repair Record</h3>
+          <span class="badge">Auto-Updates Dashboard</span>
+        </div>
+        <form id="serviceLogForm" class="form-grid">
+          <div class="form-group">
+            <label for="logDate">Service Date</label>
+            <input type="date" id="logDate" class="input-control" required />
+          </div>
+          <div class="form-group">
+            <label for="logOdo">Odometer Reading (km)</label>
+            <input type="number" id="logOdo" class="input-control" placeholder="e.g., 125000" min="0" required />
+          </div>
+          <div class="form-group">
+            <label for="logType">Service / Repair Type</label>
+            <select id="logType" class="select-control">
+              <option value="5,000 km Oil & Filter Change (PMS)">5,000 km Oil &amp; Filter Change (PMS)</option>
+              <option value="10,000 km Fuel & Air Filter Service">10,000 km Fuel &amp; Air Filter Service</option>
+              <option value="20,000 km Valve Clearance & EGR Clean">20,000 km Valve Clearance &amp; EGR Clean</option>
+              <option value="40,000 km Transmission, Diff & Coolant Flush">40,000 km Transmission, Diff &amp; Coolant Flush</option>
+              <option value="Brake Pads / Shoes & Wheel Bearing Service">Brake Pads / Shoes &amp; Wheel Bearing Service</option>
+              <option value="Suspension / Ball Joint / Tie Rod Repair">Suspension / Ball Joint / Tie Rod Repair</option>
+              <option value="Cooling System / Radiator / Fan Clutch">Cooling System / Radiator / Fan Clutch</option>
+              <option value="Electrical / Battery / Glow Plugs / Alternator">Electrical / Battery / Glow Plugs / Alternator</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="logPartsCost">Parts Cost (₱)</label>
+            <input type="number" id="logPartsCost" class="input-control" placeholder="0" min="0" step="1" value="0" />
+          </div>
+          <div class="form-group">
+            <label for="logLaborCost">Labor Cost (₱)</label>
+            <input type="number" id="logLaborCost" class="input-control" placeholder="0" min="0" step="1" value="0" />
+          </div>
+          <div class="form-group">
+            <label for="logNotes">Parts Replaced &amp; Mechanic Notes</label>
+            <input type="text" id="logNotes" class="input-control" placeholder="e.g., 6L 15W-40 CI-4 + Vic C-512 filter" />
+          </div>
+          <div class="form-actions full-span">
+            <button type="submit" class="btn btn-primary">Save Service Record</button>
+            <button type="button" id="clearLogsBtn" class="btn btn-outline">Clear All Records</button>
+          </div>
+        </form>
+      </article>
+
+      <div id="serviceLogList" class="cards-grid"></div>
+    </section>
+
+    <!-- MODULE 4: REPAIR COST TRACKER & FUEL CONSUMPTION CALCULATOR -->
+    <section id="view-costs" class="view-section hidden" role="tabpanel" aria-label="Cost Tracker & Fuel Calculator">
+      <div class="section-header">
+        <h2 class="section-heading">Repair Cost Tracker &amp; Fuel Economy (km/L)</h2>
+        <p class="muted-text">Monitor monthly and yearly maintenance expenses alongside real-world diesel fuel consumption.</p>
+      </div>
+
+      <div class="cards-grid">
+        <!-- Repair Expense Summary Card -->
         <article class="card">
           <div class="card-header">
-            <h3 class="card-title">Log Completed Service</h3>
-            <span class="badge">Saved Locally</span>
+            <h3 class="card-title">Maintenance &amp; Repair Cost Summary</h3>
+            <span class="badge">PHP (₱)</span>
           </div>
-          <form id="serviceLogForm" class="log-form">
+          <div id="costSummaryContent" class="stats-stack"></div>
+        </article>
+
+        <!-- Fuel Consumption Calculator -->
+        <article class="card">
+          <div class="card-header">
+            <h3 class="card-title">Diesel Fuel Consumption Calculator</h3>
+            <span class="badge">km/L Tracker</span>
+          </div>
+          <form id="fuelCalcForm" class="log-form">
             <div class="form-group">
-              <label for="logDate">Service Date</label>
-              <input type="date" id="logDate" class="input-control" required />
+              <label for="fuelDistance">Distance Travelled (km)</label>
+              <input type="number" id="fuelDistance" class="input-control" placeholder="e.g., 420" min="1" step="0.1" required />
             </div>
             <div class="form-group">
-              <label for="logOdo">Odometer Reading (km)</label>
-              <input type="number" id="logOdo" class="input-control" placeholder="e.g., 125000" min="0" required />
+              <label for="fuelLiters">Diesel Liters Consumed (L)</label>
+              <input type="number" id="fuelLiters" class="input-control" placeholder="e.g., 32.5" min="0.1" step="0.01" required />
             </div>
             <div class="form-group">
-              <label for="logType">Service Performed</label>
-              <select id="logType" class="select-control">
-                <option value="5,000 km Oil & Filter Change">5,000 km Oil &amp; Filter Change</option>
-                <option value="10,000 km Fuel & Air Filter PMS">10,000 km Fuel &amp; Air Filter PMS</option>
-                <option value="20,000 km Valve Clearance & EGR Clean">20,000 km Valve Clearance &amp; EGR Clean</option>
-                <option value="40,000 km Transmission, Diff & Coolant Flush">40,000 km Transmission, Diff &amp; Coolant Flush</option>
-                <option value="Brake Pads / Shoes & Wheel Bearing Repack">Brake Pads / Shoes &amp; Wheel Bearing Repack</option>
-                <option value="Suspension / Ball Joint / Tie Rod Repair">Suspension / Ball Joint / Tie Rod Repair</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="logNotes">Parts Used / Mechanic Notes</label>
-              <input type="text" id="logNotes" class="input-control" placeholder="e.g., 6L 15W-40 CI-4 + Vic C-512 filter" />
+              <label for="fuelPrice">Diesel Price per Liter (₱ — optional)</label>
+              <input type="number" id="fuelPrice" class="input-control" placeholder="e.g., 58.50" min="0" step="0.01" />
             </div>
             <div class="form-actions">
-              <button type="submit" class="btn btn-primary">Save Service Entry</button>
-              <button type="button" id="clearLogsBtn" class="btn btn-outline">Clear History</button>
+              <button type="submit" class="btn btn-primary">Calculate &amp; Log Fill-Up</button>
+              <button type="button" id="clearFuelBtn" class="btn btn-outline">Clear Fuel Logs</button>
             </div>
           </form>
-        </article>
-
-        <article class="card">
-          <div class="card-header">
-            <h3 class="card-title">Quick Fluid &amp; Torque Spec Sheet</h3>
-            <span class="badge">4JA1 / 4JA1-T</span>
-          </div>
-          <ul class="task-list">
-            <li class="task-item">
-              <div class="task-label">
-                <span class="task-title">Engine Oil &amp; Drain Plug Torque</span>
-                <span class="task-meta">5.2L (4JA1 NA) / 5.5L (4JA1-T) SAE 15W-40 CI-4 | Drain Plug: 40–45 Nm</span>
-              </div>
-            </li>
-            <li class="task-item">
-              <div class="task-label">
-                <span class="task-title">Transmission &amp; Rear Differential</span>
-                <span class="task-meta">M/T (MUA5): 2.9L 15W-40 | A/T (Jatco): 6.5L Dexron III | Rear Diff: 2.3L 85W-90 GL-5</span>
-              </div>
-            </li>
-            <li class="task-item">
-              <div class="task-label">
-                <span class="task-title">Valve Tappet Clearance &amp; Cooling</span>
-                <span class="task-meta">Intake &amp; Exhaust: 0.40 mm (Cold) | Coolant: 7.8L 50/50 | Thermostat: 82°C</span>
-              </div>
-            </li>
-            <li class="task-item">
-              <div class="task-label">
-                <span class="task-title">Wheel Lug Nuts &amp; Tire Pressure</span>
-                <span class="task-meta">Lug Nuts: 118 Nm (12 kg-m) | Front: 30–32 psi | Rear: 35–40 psi</span>
-              </div>
-            </li>
-          </ul>
+          <div id="fuelResultBox" class="alert-box success hidden" style="margin-top: 12px;"></div>
+          <div id="fuelHistoryList" class="task-list" style="margin-top: 12px;"></div>
         </article>
       </div>
+    </section>
 
+    <!-- MODULE 5: DIESEL TROUBLESHOOTING GUIDE -->
+    <section id="view-troubleshoot" class="view-section hidden" role="tabpanel" aria-label="Isuzu Crosswind Troubleshooting Guide">
       <div class="section-header">
-        <h3 class="section-title">Recorded Maintenance History</h3>
+        <h2 class="section-heading">Isuzu Crosswind Diesel Troubleshooting Guide</h2>
+        <p class="muted-text">Step-by-step diagnostic flow for common 4JA1, 4JA1-T, and 4JK1-TC symptoms from simplest check to major repair.</p>
       </div>
-      <div id="serviceLogList" class="cards-grid"></div>
+      <div id="troubleshootContainer" class="cards-grid"></div>
+    </section>
+
+    <!-- MODULE 6: SPECIFICATIONS & ALL VERSIONS MATRIX -->
+    <section id="view-specs" class="view-section hidden" role="tabpanel" aria-label="Technical Specifications & Model History">
+      <div class="section-header">
+        <h2 class="section-heading">Technical Specifications by Engine, Year &amp; Transmission</h2>
+        <p class="muted-text">Verified fluid capacities, valve clearances, injection pressures, and torque specs across all 2001–2017 Crosswind models.</p>
+      </div>
+      <div id="specsContainer" class="cards-grid"></div>
     </section>
   </main>
 
-  <!-- Mobile Bottom Navigation -->
+  <!-- Mobile Bottom Navigation (6 Core Modules) -->
   <nav class="bottom-nav" aria-label="Mobile Navigation">
-    <button class="bottom-btn active" data-view="checklists" aria-current="page">
+    <button class="bottom-btn active" data-view="maintenance" aria-current="page">
       <span class="nav-icon" aria-hidden="true">✓</span>
-      <span>Checklists</span>
-    </button>
-    <button class="bottom-btn" data-view="versions">
-      <span class="nav-icon" aria-hidden="true">🚙</span>
-      <span>Versions</span>
+      <span>Maintain</span>
     </button>
     <button class="bottom-btn" data-view="parts">
       <span class="nav-icon" aria-hidden="true">⚙️</span>
       <span>Parts</span>
     </button>
-    <button class="bottom-btn" data-view="servicelog">
+    <button class="bottom-btn" data-view="history">
       <span class="nav-icon" aria-hidden="true">📋</span>
-      <span>Service Log</span>
+      <span>History</span>
+    </button>
+    <button class="bottom-btn" data-view="costs">
+      <span class="nav-icon" aria-hidden="true">⛽</span>
+      <span>Cost/Fuel</span>
+    </button>
+    <button class="bottom-btn" data-view="troubleshoot">
+      <span class="nav-icon" aria-hidden="true">🔧</span>
+      <span>Diagnose</span>
+    </button>
+    <button class="bottom-btn" data-view="specs">
+      <span class="nav-icon" aria-hidden="true">📘</span>
+      <span>Specs</span>
     </button>
   </nav>
 
   <!-- Toast Notification -->
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
-  <script src="./script.js?v=3" defer></script>
+  <script src="./script.js?v=4" defer></script>
 </body>
 </html>
