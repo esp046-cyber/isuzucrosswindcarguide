@@ -1,4 +1,4 @@
-const CACHE_NAME = "isuzu-crosswind-pms-v1.0.0";
+const CACHE_NAME = "isuzu-crosswind-guide-v2.0.0";
 const ASSETS_TO_CACHE = [
   "./",
   "./index.html",

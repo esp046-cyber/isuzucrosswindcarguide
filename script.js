@@ -4,8 +4,8 @@ const CROSSWIND_VERSIONS = [
     name: "Gen 1 (2001–2004): XL, XT, XTO, XUV, XUVi",
     engine: "4JA1 2.5L Direct Injection NA (85 hp) & 4JA1-T Low-Charge Turbo (87–90 hp)",
     trans: "5-Speed Manual (MUA5) / 4-Speed Jatco Automatic (XTO / XUVi)",
-    highlights: "Timing gear-driven valvetrain (no timing belt!), mechanical Bosch VE rotary injection pump, rear leaf springs, torsion bar front suspension.",
-    keyNotes: "Use 15W-40 CI-4/CH-4 mineral or semi-synthetic diesel oil. Check injection pump fuel cut solenoid & glow plug relay."
+    highlights: "Timing gear-driven valvetrain (no timing belt), mechanical Bosch VE rotary injection pump, rear leaf springs, torsion bar front suspension.",
+    keyNotes: "Use 15W-40 CI-4/CH-4 mineral or semi-synthetic diesel oil. Inspect injection pump fuel cut solenoid & glow plug relay."
   },
   {
     id: "gen2",
@@ -140,20 +140,24 @@ let state = {
   version: localStorage.getItem("cw_version") || "all",
   interval: "all",
   completed: JSON.parse(localStorage.getItem("cw_completed") || "{}"),
+  logs: JSON.parse(localStorage.getItem("cw_service_logs") || "[]"),
+  onboarded: localStorage.getItem("cw_onboarded") === "true",
   theme: localStorage.getItem("cw_theme") || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light")
 };
 
-// DOM Elements
+// DOM References
 const versionSelect = document.getElementById("versionSelect");
 const checklistContainer = document.getElementById("checklistContainer");
 const versionsContainer = document.getElementById("versionsContainer");
 const partsContainer = document.getElementById("partsContainer");
+const serviceLogList = document.getElementById("serviceLogList");
 const progressFill = document.getElementById("progressFill");
 const progressBarWrap = document.getElementById("progressBarWrap");
 const completedCount = document.getElementById("completedCount");
 const progressPercent = document.getElementById("progressPercent");
 const offlineBadge = document.getElementById("offlineBadge");
 const toastEl = document.getElementById("toast");
+const onboardingBanner = document.getElementById("onboardingBanner");
 
 function showToast(msg) {
   toastEl.textContent = msg;
@@ -161,6 +165,16 @@ function showToast(msg) {
   clearTimeout(window.__toastTimer);
   window.__toastTimer = setTimeout(() => toastEl.classList.remove("show"), 2600);
 }
+
+// Onboarding Banner
+if (!state.onboarded) {
+  onboardingBanner.classList.remove("hidden");
+}
+document.getElementById("dismissOnboardingBtn").addEventListener("click", () => {
+  state.onboarded = true;
+  localStorage.setItem("cw_onboarded", "true");
+  onboardingBanner.classList.add("hidden");
+});
 
 // Theme Handling
 function applyTheme(theme) {
@@ -237,7 +251,7 @@ checklistContainer.addEventListener("change", (e) => {
     state.completed[id] = e.target.checked;
     localStorage.setItem("cw_completed", JSON.stringify(state.completed));
     renderChecklists();
-    if (e.target.checked) showToast("Maintenance item checked off!");
+    if (e.target.checked) showToast("Maintenance task checked off!");
   }
 });
 
@@ -251,8 +265,12 @@ document.getElementById("resetChecklistBtn").addEventListener("click", () => {
 // Interval Pills
 document.querySelectorAll(".pill").forEach(btn => {
   btn.addEventListener("click", () => {
-    document.querySelectorAll(".pill").forEach(p => p.classList.remove("active"));
+    document.querySelectorAll(".pill").forEach(p => {
+      p.classList.remove("active");
+      p.setAttribute("aria-pressed", "false");
+    });
     btn.classList.add("active");
+    btn.setAttribute("aria-pressed", "true");
     state.interval = btn.dataset.interval;
     renderChecklists();
   });
@@ -296,13 +314,13 @@ function renderParts() {
   });
 
   if (matches.length === 0) {
-    partsContainer.innerHTML = `<div class="card"><p class="card-title">No matching parts found</p><p class="muted-text">Try searching by OEM number (e.g., 8-97148270-0), system name, or fluid type.</p></div>`;
+    partsContainer.innerHTML = `<div class="card"><p class="card-title">No matching parts found</p><p class="muted-text">Try searching by OEM part number (e.g., 8-97148270-0), system name, or fluid grade, or reset the system filter to All Systems.</p></div>`;
     return;
   }
 
   partsContainer.innerHTML = matches.map(p => `
     <article class="part-card">
-      <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;">
         <span class="part-code">${p.code}</span>
         <span class="badge">${p.system}</span>
       </div>
@@ -316,76 +334,100 @@ function renderParts() {
 partSearchInput.addEventListener("input", renderParts);
 partCategoryFilter.addEventListener("change", renderParts);
 
-// Navigation Switching
-function switchView(viewName) {
+// Service Log Management
+const logDateInput = document.getElementById("logDate");
+if (logDateInput) {
+  logDateInput.value = new Date().toISOString().split("T")[0];
+}
+
+function renderServiceLogs() {
+  if (state.logs.length === 0) {
+    serviceLogList.innerHTML = `
+      <article class="card">
+        <p class="card-title">No service records logged yet</p>
+        <p class="muted-text">Use the form above after an oil change or PMS visit to store your Crosswind's maintenance history right on your phone.</p>
+      </article>
+    `;
+    return;
+  }
+
+  serviceLogList.innerHTML = state.logs.map((entry, idx) => `
+    <article class="card">
+      <div class="card-header">
+        <div>
+          <span class="badge">${Number(entry.odo).toLocaleString()} km</span>
+          <h4 class="card-title" style="margin-top:8px;">${entry.type}</h4>
+        </div>
+        <button class="btn btn-outline btn-sm" data-delete-log="${idx}" aria-label="Delete service entry">Delete</button>
+      </div>
+      <p style="margin:0;font-size:0.875rem;"><strong>Date:</strong> ${entry.date}</p>
+      <p class="muted-text" style="margin-top:4px;">${entry.notes || "Standard PMS completed."}</p>
+    </article>
+  `).join("");
+}
+
+document.getElementById("serviceLogForm").addEventListener("submit", (e) => {
+  e.preventDefault();
+  const entry = {
+    date: document.getElementById("logDate").value,
+    odo: document.getElementById("logOdo").value,
+    type: document.getElementById("logType").value,
+    notes: document.getElementById("logNotes").value.trim()
+  };
+  state.logs.unshift(entry);
+  localStorage.setItem("cw_service_logs", JSON.stringify(state.logs));
+  document.getElementById("logNotes").value = "";
+  renderServiceLogs();
+  showToast("Service entry saved offline!");
+});
+
+serviceLogList.addEventListener("click", (e) => {
+  const btn = e.target.closest("[data-delete-log]");
+  if (!btn) return;
+  const idx = Number(btn.dataset.deleteLog);
+  state.logs.splice(idx, 1);
+  localStorage.setItem("cw_service_logs", JSON.stringify(state.logs));
+  renderServiceLogs();
+  showToast("Service entry removed.");
+});
+
+document.getElementById("clearLogsBtn").addEventListener("click", () => {
+  state.logs = [];
+  localStorage.removeItem("cw_service_logs");
+  renderServiceLogs();
+  showToast("Service log history cleared.");
+});
+
+// Navigation & Deep-Link Hash Routing
+function switchView(viewName, updateHash = true) {
+  const validViews = ["checklists", "versions", "parts", "servicelog"];
+  const target = validViews.includes(viewName) ? viewName : "checklists";
+
   document.querySelectorAll(".view-section").forEach(sec => sec.classList.add("hidden"));
-  document.getElementById(`view-${viewName}`).classList.remove("hidden");
+  document.getElementById(`view-${target}`).classList.remove("hidden");
 
   document.querySelectorAll(".tab-btn, .bottom-btn").forEach(btn => {
-    const active = btn.dataset.view === viewName;
+    const active = btn.dataset.view === target;
     btn.classList.toggle("active", active);
     if (btn.hasAttribute("aria-selected")) btn.setAttribute("aria-selected", active);
+    if (btn.classList.contains("bottom-btn")) {
+      if (active) btn.setAttribute("aria-current", "page");
+      else btn.removeAttribute("aria-current");
+    }
   });
+
+  if (updateHash && window.location.hash !== `#${target}`) {
+    history.pushState(null, "", `#${target}`);
+  }
 }
 
 document.querySelectorAll(".tab-btn, .bottom-btn").forEach(btn => {
   btn.addEventListener("click", () => switchView(btn.dataset.view));
 });
 
-// Claude.ai ChatPrompt Maker
-const generatedPromptBox = document.getElementById("generatedPromptBox");
-function buildClaudePrompt() {
-  const model = document.getElementById("promptModel").value.trim() || "Isuzu Crosswind (4JA1-T)";
-  const odo = document.getElementById("promptOdo").value || "100000";
-  const goal = document.getElementById("promptGoal").value;
-  const notes = document.getElementById("promptNotes").value.trim() || "Standard preventive maintenance";
-
-  const templates = {
-    pms: `Act as an Isuzu master diesel technician specializing in 4JA1, 4JA1-T, and 4JK1-TC engines.
-Vehicle: ${model}
-Current Odometer: ${odo} km
-Owner Notes: ${notes}
-
-Please provide:
-1. A prioritized Preventive Maintenance Service (PMS) checklist tailored to this exact mileage.
-2. Exact fluid capacities & viscosity grades (Engine oil, M/T or Jatco A/T ATF, rear differential GL-5, coolant, brake fluid).
-3. Complete OEM Isuzu part numbers + trusted Japanese replacement equivalents (Vic, Sakura, GMB, KYB, Exedy).
-4. Step-by-step DIY vs. shop-only labor guidance and torque specs.`,
-    symptom: `Act as a senior Isuzu diesel diagnostic specialist.
-Vehicle: ${model} (${odo} km)
-Reported Symptom: ${notes}
-
-Diagnose the top 5 most probable root causes ranked from simplest/cheapest fix to major component repair. Include specific tests (glow plug resistance, injection pump timing, EGR soot check, turbo boost/oil seal check, vacuum pump hose inspection) and exact OEM part numbers needed.`,
-    quote: `Act as an automotive service advisor and Isuzu Crosswind parts specialist.
-Vehicle: ${model} (${odo} km)
-Estimate / Scope to Audit: ${notes}
-
-Break down fair market parts pricing (OEM vs. replacement), standard flat-rate labor hours, unnecessary add-ons to decline, and critical related seals/gaskets that should be replaced while the assembly is open.`,
-    prebuy: `Act as an expert used-car inspector specializing in Philippine/ASEAN Isuzu Crosswind AUVs.
-Target Unit: ${model} (${odo} km)
-Specific Concerns: ${notes}
-
-Give me a comprehensive 25-point pre-purchase inspection scorecard covering 4JA1/4JA1-T blow-by test, cold-start glow test, Jatco A/T shift flare test, chassis rust hotspots, suspension ball joints, and documents verification.`
-  };
-
-  generatedPromptBox.value = templates[goal];
-}
-
-document.getElementById("generatePromptBtn").addEventListener("click", () => {
-  buildClaudePrompt();
-  showToast("Claude.ai prompt generated!");
-});
-
-document.getElementById("copyPromptBtn").addEventListener("click", async () => {
-  if (!generatedPromptBox.value) buildClaudePrompt();
-  try {
-    await navigator.clipboard.writeText(generatedPromptBox.value);
-    showToast("Copied prompt to clipboard!");
-  } catch {
-    generatedPromptBox.select();
-    document.execCommand("copy");
-    showToast("Prompt selected & copied!");
-  }
+window.addEventListener("hashchange", () => {
+  const hashView = window.location.hash.replace("#", "");
+  if (hashView) switchView(hashView, false);
 });
 
 // PWA Install Prompt & Offline Status
@@ -425,5 +467,8 @@ if ("serviceWorker" in navigator) {
 renderChecklists();
 renderVersions();
 renderParts();
-buildClaudePrompt();
+renderServiceLogs();
 updateOnlineStatus();
+if (window.location.hash) {
+  switchView(window.location.hash.replace("#", ""), false);
+}

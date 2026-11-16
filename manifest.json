@@ -1,7 +1,7 @@
 {
-  "name": "Isuzu Crosswind Maintenance & Parts Master PWA",
-  "short_name": "Crosswind PMS",
-  "description": "Complete Isuzu Crosswind maintenance guide (2001\u20132017 all versions), PMS checklists, full OEM/replacement parts catalog, and Claude.ai diagnostic prompt maker.",
+  "name": "Isuzu Crosswind Maintenance & Parts Guide",
+  "short_name": "Crosswind Guide",
+  "description": "Complete Isuzu Crosswind maintenance guide (2001\u20132017 all versions), PMS checklists, full OEM/replacement parts catalog, and personal service log.",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",

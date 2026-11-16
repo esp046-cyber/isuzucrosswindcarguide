@@ -7,22 +7,24 @@
   <meta name="theme-color" content="#0F172A" media="(prefers-color-scheme: dark)" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <meta name="apple-mobile-web-app-title" content="Crosswind PMS" />
-  <meta name="description" content="Complete Isuzu Crosswind Maintenance Guide (2001–2017 All Versions: XL, XT, XTi, XUV, XUVi, Sportivo, Sportivo X). Interactive checklists, PMS schedules, and full OEM/replacement parts catalog." />
+  <meta name="apple-mobile-web-app-title" content="Crosswind Guide" />
+  <meta name="description" content="Complete Isuzu Crosswind Maintenance Guide (2001–2017 All Versions: XL, XT, XTO, XTi, XUV, XUVi, Sportivo, Sportivo X). Interactive checklists, PMS schedules, parts catalog, and personal service log." />
+  <link rel="canonical" href="https://esp046-cyber.github.io/isuzucrosswindcarguide/" />
 
   <!-- Open Graph / Social Media Meta Tags -->
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="Isuzu Crosswind Master Maintenance & Parts PWA (All Versions)" />
-  <meta property="og:description" content="First check, monthly, quarterly & mileage PMS checklists, fluids, torque specs, and complete Isuzu Crosswind parts catalog (4JA1, 4JA1-T, 4JK1-TC)." />
-  <meta property="og:image" content="./assets/og-image.png" />
+  <meta property="og:url" content="https://esp046-cyber.github.io/isuzucrosswindcarguide/" />
+  <meta property="og:title" content="Isuzu Crosswind Master Maintenance & Parts Guide (All Versions)" />
+  <meta property="og:description" content="First check, monthly, quarterly & mileage PMS checklists, fluids, torque specs, service log, and complete Isuzu Crosswind parts catalog (4JA1, 4JA1-T, 4JK1-TC)." />
+  <meta property="og:image" content="https://esp046-cyber.github.io/isuzucrosswindcarguide/assets/og-image.png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Isuzu Crosswind Maintenance & Parts PWA" />
-  <meta name="twitter:description" content="Offline-ready maintenance guide & full parts directory for all Isuzu Crosswind models." />
-  <meta name="twitter:image" content="./assets/og-image.png" />
+  <meta name="twitter:title" content="Isuzu Crosswind Maintenance & Parts Guide" />
+  <meta name="twitter:description" content="Offline-ready maintenance guide, PMS checklists & full parts directory for all Isuzu Crosswind models." />
+  <meta name="twitter:image" content="https://esp046-cyber.github.io/isuzucrosswindcarguide/assets/og-image.png" />
 
-  <title>Isuzu Crosswind Maintenance & Parts Master Guide</title>
+  <title>Isuzu Crosswind Maintenance & Parts Guide</title>
   <link rel="manifest" href="./manifest.json" />
   <link rel="icon" href="./favicon.ico" sizes="any" />
   <link rel="apple-touch-icon" href="./icon-192.png" />
@@ -37,7 +39,7 @@
         <div class="brand-badge" aria-hidden="true">IC</div>
         <div>
           <h1 class="brand-title">Isuzu Crosswind</h1>
-          <p class="brand-sub">Master Maintenance &amp; Parts PWA (2001–2017)</p>
+          <p class="brand-sub">Master Maintenance &amp; Parts Guide (2001–2017)</p>
         </div>
       </div>
 
@@ -66,6 +68,15 @@
   </header>
 
   <main id="main-content" class="app-main">
+    <!-- First-Time Onboarding Banner (Dismissible) -->
+    <aside id="onboardingBanner" class="onboarding-card hidden" aria-label="Quick Start Tip">
+      <div class="onboarding-content">
+        <strong>Welcome to your Crosswind Garage Guide!</strong>
+        <p class="muted-text">Select your Crosswind generation above, check off PMS tasks offline, look up OEM part numbers, or log your oil changes in <strong>Service Log</strong>.</p>
+      </div>
+      <button id="dismissOnboardingBtn" class="btn btn-outline btn-sm" aria-label="Dismiss welcome tip">Got it</button>
+    </aside>
+
     <!-- Progress Summary Banner -->
     <section class="summary-card" aria-labelledby="progressHeading">
       <div class="summary-top">
@@ -85,40 +96,40 @@
     </section>
 
     <!-- View Navigation Tabs (Desktop & Tablet) -->
-    <nav class="tab-nav" aria-label="Main Sections">
-      <button class="tab-btn active" data-view="checklists" aria-selected="true">Checklists</button>
-      <button class="tab-btn" data-view="versions" aria-selected="false">All Versions</button>
-      <button class="tab-btn" data-view="parts" aria-selected="false">Parts &amp; Materials</button>
-      <button class="tab-btn" data-view="prompts" aria-selected="false">Claude AI Prompts</button>
+    <nav class="tab-nav" role="tablist" aria-label="Main Sections">
+      <button class="tab-btn active" role="tab" data-view="checklists" aria-selected="true" aria-controls="view-checklists">Checklists</button>
+      <button class="tab-btn" role="tab" data-view="versions" aria-selected="false" aria-controls="view-versions">All Versions</button>
+      <button class="tab-btn" role="tab" data-view="parts" aria-selected="false" aria-controls="view-parts">Parts &amp; Materials</button>
+      <button class="tab-btn" role="tab" data-view="servicelog" aria-selected="false" aria-controls="view-servicelog">Service Log &amp; Specs</button>
     </nav>
 
     <!-- VIEW 1: MAINTENANCE CHECKLISTS -->
-    <section id="view-checklists" class="view-section active" aria-label="Maintenance Checklists">
+    <section id="view-checklists" class="view-section active" role="tabpanel" aria-label="Maintenance Checklists">
       <div class="filter-pills" role="group" aria-label="Interval Filter">
-        <button class="pill active" data-interval="all">All Intervals</button>
-        <button class="pill" data-interval="first">First Check (1k–5k km)</button>
-        <button class="pill" data-interval="monthly">Monthly / BLOWBAGETS</button>
-        <button class="pill" data-interval="quarterly">Quarterly (5k km / 3 Mo)</button>
-        <button class="pill" data-interval="semi">Semi-Annual (10k–20k km)</button>
-        <button class="pill" data-interval="major">Major PMS (40k–80k km)</button>
+        <button class="pill active" data-interval="all" aria-pressed="true">All Intervals</button>
+        <button class="pill" data-interval="first" aria-pressed="false">First Check (1k–5k km)</button>
+        <button class="pill" data-interval="monthly" aria-pressed="false">Monthly / BLOWBAGETS</button>
+        <button class="pill" data-interval="quarterly" aria-pressed="false">Quarterly (5k km / 3 Mo)</button>
+        <button class="pill" data-interval="semi" aria-pressed="false">Semi-Annual (10k–20k km)</button>
+        <button class="pill" data-interval="major" aria-pressed="false">Major PMS (40k–80k km)</button>
       </div>
 
       <div id="checklistContainer" class="cards-grid"></div>
     </section>
 
     <!-- VIEW 2: ALL VERSIONS MATRIX -->
-    <section id="view-versions" class="view-section hidden" aria-label="Isuzu Crosswind Version History">
+    <section id="view-versions" class="view-section hidden" role="tabpanel" aria-label="Isuzu Crosswind Version History">
       <div class="section-header">
-        <h2>Isuzu Crosswind Complete Version Matrix (2001–2017)</h2>
+        <h2 class="section-heading">Isuzu Crosswind Complete Version Matrix (2001–2017)</h2>
         <p class="muted-text">Detailed specifications, engine codes, transmission types, and variant-specific maintenance notes across all Philippine &amp; ASEAN releases.</p>
       </div>
       <div id="versionsContainer" class="cards-grid"></div>
     </section>
 
     <!-- VIEW 3: COMPLETE PARTS & MATERIALS CATALOG -->
-    <section id="view-parts" class="view-section hidden" aria-label="Complete Isuzu Crosswind Parts and Materials">
+    <section id="view-parts" class="view-section hidden" role="tabpanel" aria-label="Complete Isuzu Crosswind Parts and Materials">
       <div class="section-header">
-        <h2>Complete Isuzu Crosswind Parts &amp; Materials Directory</h2>
+        <h2 class="section-heading">Complete Isuzu Crosswind Parts &amp; Materials Directory</h2>
         <p class="muted-text">Searchable OEM part references, fluid capacities, filters, belts, suspension, brake, cooling, and electrical parts.</p>
       </div>
 
@@ -140,50 +151,94 @@
       <div id="partsContainer" class="parts-list"></div>
     </section>
 
-    <!-- VIEW 4: CLAUDE.AI CHATPROMPT STUDIO -->
-    <section id="view-prompts" class="view-section hidden" aria-label="Claude.ai Chatprompt Maker">
+    <!-- VIEW 4: SERVICE LOG & QUICK TORQUE/FLUID REFERENCE -->
+    <section id="view-servicelog" class="view-section hidden" role="tabpanel" aria-label="Personal Service Log and Quick Specs">
       <div class="section-header">
-        <h2>Claude.ai Diagnostic &amp; Maintenance Prompt Maker</h2>
-        <p class="muted-text">Generate tailored, structured prompts to paste directly into Claude.ai for troubleshooting, mechanic quote auditing, or custom PMS logs.</p>
+        <h2 class="section-heading">Personal Service Log &amp; Workshop Specs</h2>
+        <p class="muted-text">Record your Crosswind's oil changes, PMS dates, and odometer readings offline, plus quick reference torque and fluid capacities.</p>
       </div>
 
-      <div class="prompt-builder-card">
-        <div class="form-grid">
-          <div class="form-group">
-            <label for="promptModel">Your Crosswind Variant &amp; Year</label>
-            <input type="text" id="promptModel" class="input-control" value="2012 Isuzu Crosswind Sportivo X (4JA1-T A/T)" />
+      <div class="cards-grid" style="margin-bottom: 16px;">
+        <article class="card">
+          <div class="card-header">
+            <h3 class="card-title">Log Completed Service</h3>
+            <span class="badge">Saved Locally</span>
           </div>
-          <div class="form-group">
-            <label for="promptOdo">Current Odometer (km)</label>
-            <input type="number" id="promptOdo" class="input-control" value="125000" />
+          <form id="serviceLogForm" class="log-form">
+            <div class="form-group">
+              <label for="logDate">Service Date</label>
+              <input type="date" id="logDate" class="input-control" required />
+            </div>
+            <div class="form-group">
+              <label for="logOdo">Odometer Reading (km)</label>
+              <input type="number" id="logOdo" class="input-control" placeholder="e.g., 125000" min="0" required />
+            </div>
+            <div class="form-group">
+              <label for="logType">Service Performed</label>
+              <select id="logType" class="select-control">
+                <option value="5,000 km Oil & Filter Change">5,000 km Oil &amp; Filter Change</option>
+                <option value="10,000 km Fuel & Air Filter PMS">10,000 km Fuel &amp; Air Filter PMS</option>
+                <option value="20,000 km Valve Clearance & EGR Clean">20,000 km Valve Clearance &amp; EGR Clean</option>
+                <option value="40,000 km Transmission, Diff & Coolant Flush">40,000 km Transmission, Diff &amp; Coolant Flush</option>
+                <option value="Brake Pads / Shoes & Wheel Bearing Repack">Brake Pads / Shoes &amp; Wheel Bearing Repack</option>
+                <option value="Suspension / Ball Joint / Tie Rod Repair">Suspension / Ball Joint / Tie Rod Repair</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="logNotes">Parts Used / Mechanic Notes</label>
+              <input type="text" id="logNotes" class="input-control" placeholder="e.g., 6L 15W-40 CI-4 + Vic C-512 filter" />
+            </div>
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary">Save Service Entry</button>
+              <button type="button" id="clearLogsBtn" class="btn btn-outline">Clear History</button>
+            </div>
+          </form>
+        </article>
+
+        <article class="card">
+          <div class="card-header">
+            <h3 class="card-title">Quick Fluid &amp; Torque Spec Sheet</h3>
+            <span class="badge">4JA1 / 4JA1-T</span>
           </div>
-          <div class="form-group">
-            <label for="promptGoal">Prompt Template Goal</label>
-            <select id="promptGoal" class="select-control">
-              <option value="pms">Generate Custom PMS &amp; Parts Shopping List</option>
-              <option value="symptom">Diagnose Diesel Symptom (Smoke, Hard Start, Overheat)</option>
-              <option value="quote">Audit Mechanic Repair Estimate / Parts Pricing</option>
-              <option value="prebuy">Used Crosswind Pre-Purchase Inspection Checklist</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="promptNotes">Symptoms / Specific Notes</label>
-            <input type="text" id="promptNotes" class="input-control" placeholder="e.g., slight black smoke on uphill, steering play, ATF change due" />
-          </div>
-        </div>
-        <div class="prompt-actions">
-          <button id="generatePromptBtn" class="btn btn-primary">Generate Claude.ai Prompt</button>
-          <button id="copyPromptBtn" class="btn btn-outline">Copy Prompt</button>
-        </div>
-        <label for="generatedPromptBox" class="sr-only">Generated Claude.ai Prompt</label>
-        <textarea id="generatedPromptBox" class="prompt-textarea" rows="8" readonly></textarea>
+          <ul class="task-list">
+            <li class="task-item">
+              <div class="task-label">
+                <span class="task-title">Engine Oil &amp; Drain Plug Torque</span>
+                <span class="task-meta">5.2L (4JA1 NA) / 5.5L (4JA1-T) SAE 15W-40 CI-4 | Drain Plug: 40–45 Nm</span>
+              </div>
+            </li>
+            <li class="task-item">
+              <div class="task-label">
+                <span class="task-title">Transmission &amp; Rear Differential</span>
+                <span class="task-meta">M/T (MUA5): 2.9L 15W-40 | A/T (Jatco): 6.5L Dexron III | Rear Diff: 2.3L 85W-90 GL-5</span>
+              </div>
+            </li>
+            <li class="task-item">
+              <div class="task-label">
+                <span class="task-title">Valve Tappet Clearance &amp; Cooling</span>
+                <span class="task-meta">Intake &amp; Exhaust: 0.40 mm (Cold) | Coolant: 7.8L 50/50 | Thermostat: 82°C</span>
+              </div>
+            </li>
+            <li class="task-item">
+              <div class="task-label">
+                <span class="task-title">Wheel Lug Nuts &amp; Tire Pressure</span>
+                <span class="task-meta">Lug Nuts: 118 Nm (12 kg-m) | Front: 30–32 psi | Rear: 35–40 psi</span>
+              </div>
+            </li>
+          </ul>
+        </article>
       </div>
+
+      <div class="section-header">
+        <h3 class="section-title">Recorded Maintenance History</h3>
+      </div>
+      <div id="serviceLogList" class="cards-grid"></div>
     </section>
   </main>
 
-  <!-- Mobile Bottom Navigation -->
+  <!-- Mobile Bottom Navigation (4 Clean Vehicle Tabs - No Claude.ai Tab) -->
   <nav class="bottom-nav" aria-label="Mobile Navigation">
-    <button class="bottom-btn active" data-view="checklists">
+    <button class="bottom-btn active" data-view="checklists" aria-current="page">
       <span class="nav-icon" aria-hidden="true">✓</span>
       <span>Checklists</span>
     </button>
@@ -195,9 +250,9 @@
       <span class="nav-icon" aria-hidden="true">⚙️</span>
       <span>Parts</span>
     </button>
-    <button class="bottom-btn" data-view="prompts">
-      <span class="nav-icon" aria-hidden="true">💬</span>
-      <span>Claude AI</span>
+    <button class="bottom-btn" data-view="servicelog">
+      <span class="nav-icon" aria-hidden="true">📋</span>
+      <span>Service Log</span>
     </button>
   </nav>
 
