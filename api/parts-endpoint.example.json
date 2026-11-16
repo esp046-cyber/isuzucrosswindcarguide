@@ -1,9 +1,5 @@
 {
   "status": "static-offline-ready",
   "totalParts": 28,
-  "engines": [
-    "4JA1",
-    "4JA1-T",
-    "4JK1-TC"
-  ]
+  "version": "5.0.0"
 }
