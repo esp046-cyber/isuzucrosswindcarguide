@@ -1,1 +1,1 @@
-CREATE TABLE maintenance_logs (id INTEGER PRIMARY KEY, odometer_km INTEGER, service_type TEXT, parts_cost REAL, labor_cost REAL, service_date DATE);
+CREATE TABLE emergency_incidents (id INTEGER PRIMARY KEY, incident_date DATE, odometer_km INTEGER, category TEXT, notes TEXT);
