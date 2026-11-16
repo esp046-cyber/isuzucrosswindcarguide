@@ -849,3 +849,42 @@ body {
     color: #000000;
   }
 }
+
+/* v6.0 Emergency Center Enhancements */
+.badge-danger {
+  background: var(--danger-soft);
+  color: var(--danger);
+}
+
+details.em-details {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface-alt);
+  padding: 10px 12px;
+}
+
+details.em-details summary {
+  font-weight: 700;
+  font-size: 0.9375rem;
+  cursor: pointer;
+  min-height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+details.em-details[open] summary {
+  margin-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 6px;
+}
+
+.em-step-list {
+  margin: 0;
+  padding-left: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.875rem;
+}

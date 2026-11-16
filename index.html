@@ -28,17 +28,17 @@
   <meta name="twitter:image" content="https://esp046-cyber.github.io/isuzucrosswindcarguide/assets/og-image.png" />
 
   <title>Crosswind Garage — Maintenance, Tools & Emergency Center</title>
-  <link rel="manifest" href="./manifest.json?v=5" />
-  <link rel="icon" href="./favicon.ico?v=5" sizes="any" />
-  <link rel="apple-touch-icon" href="./icon-192.png?v=5" />
-  <link rel="stylesheet" href="./style.css?v=5" />
+  <link rel="manifest" href="./manifest.json?v=6" />
+  <link rel="icon" href="./favicon.ico?v=6" sizes="any" />
+  <link rel="apple-touch-icon" href="./icon-192.png?v=6" />
+  <link rel="stylesheet" href="./style.css?v=6" />
 </head>
 <body>
   <a href="#main-content" class="skip-link">Skip to main content</a>
 
   <!-- Update Banner -->
   <div id="updateBanner" class="update-banner hidden" role="status" aria-live="polite">
-    <span>Crosswind Garage v5.0 update ready!</span>
+    <span>Crosswind Garage v6.0 update ready!</span>
     <button id="reloadAppBtn" class="btn btn-primary btn-sm">Refresh Now</button>
   </div>
 
@@ -76,8 +76,15 @@
   <main id="main-content" class="app-main">
     <!-- Static No-JS / Fallback Safety Notice -->
     <noscript>
-      <div class="alert-box warning">
-        JavaScript is disabled. Basic static specs: 4JA1/4JA1-T Oil: 5.2L–5.5L 15W-40 CI-4 (Filter 8-97148270-0) | Valve Clearance: 0.40 mm Cold | Tires: 30–32 psi Front, 35–40 psi Rear. Never open a hot radiator cap.
+      <div class="alert-box danger">
+        <strong>OFFLINE / NO-JAVASCRIPT EMERGENCY FALLBACK:</strong>
+        <ul style="margin: 6px 0 0; padding-left: 18px;">
+          <li><strong>Engine Overheating:</strong> Turn OFF A/C, pull over safely, idle 1–2 min if no steam/spray, shut off if in Red zone. <strong>NEVER open a hot radiator cap.</strong> Wait 30–45 min until upper hose is cool.</li>
+          <li><strong>Brake Failure:</strong> Pump brake pedal 3–4 times, downshift to lower gears (3rd/2nd or 2/L), gently apply handbrake with release button pressed, steer to shoulder. <strong>NEVER continue driving with brake failure.</strong></li>
+          <li><strong>Tire Blowout:</strong> Grip steering wheel firmly, DO NOT slam brakes, ease off gas until coasting safely, pull onto level ground, chock opposite wheel. <strong>NEVER crawl under a vehicle supported only by a jack.</strong></li>
+          <li><strong>Smoke / Fire:</strong> Pull over, turn ignition OFF, evacuate passengers, disconnect negative (-) battery terminal only if safe.</li>
+          <li><strong>Basic Specs (Verify against your model's Isuzu Owner's Manual):</strong> 4JA1/4JA1-T Oil: 5.2L–5.5L 15W-40 CI-4 | Tires: ~30–32 psi Front / 35–40 psi Rear.</li>
+        </ul>
       </div>
     </noscript>
 
@@ -436,24 +443,143 @@
       <div id="specsContainer" class="cards-grid"></div>
     </section>
 
-    <!-- VIEW 9: EMERGENCY & ROADSIDE FALLBACK CENTER -->
+    <!-- VIEW 9: EMERGENCY & ROADSIDE FALLBACK CENTER (v6.0) -->
     <section id="view-emergency" class="view-section hidden" role="tabpanel" aria-label="Emergency Center">
-      <div class="section-header">
-        <h2 class="section-heading">🚨 Emergency &amp; Roadside Breakdown Center</h2>
-        <p class="muted-text">100% offline critical safety procedures for Isuzu Crosswind drivers.</p>
+      <div class="section-header row-between">
+        <div>
+          <h2 class="section-heading">🚨 Emergency &amp; Roadside Fallback Center</h2>
+          <p class="muted-text">100% offline safety guides, contacts, prep checklist &amp; incident log for Isuzu Crosswind owners.</p>
+        </div>
+        <div class="action-cluster">
+          <button type="button" class="btn btn-outline btn-sm" data-jump="dashboard">← Back to Dashboard</button>
+          <button type="button" id="printEmergencyBtn" class="btn btn-outline btn-sm">Print Emergency Checklist</button>
+        </div>
       </div>
 
-      <!-- Critical Safety Callout -->
-      <div class="alert-box danger" role="alert" style="margin-bottom: 16px;">
-        <strong>CRITICAL SAFETY RULES:</strong>
+      <!-- Critical Safety Callout (Red Warning Indicator) -->
+      <div class="alert-box danger" role="alert" style="margin-bottom: 14px;">
+        <strong>CRITICAL AUTOMOTIVE SAFETY RULES (STOP &amp; CALL ROADSIDE ASSISTANCE IF UNSAFE):</strong>
         <ul style="margin: 6px 0 0; padding-left: 18px;">
           <li><strong>NEVER</strong> open a hot radiator cap—pressurized boiling coolant causes severe scalding burns.</li>
-          <li><strong>NEVER</strong> crawl under a vehicle supported only by a scissor/hydraulic jack—always use jack stands or wheel chocks on flat ground.</li>
-          <li><strong>NEVER</strong> continue driving with suspected brake failure or a flashing red oil pressure warning light.</li>
+          <li><strong>NEVER</strong> work underneath a vehicle supported only by a jack—always use jack stands and wheel chocks on solid, level ground.</li>
+          <li><strong>NEVER</strong> continue driving with suspected brake failure, steering loss, or a flashing red oil pressure warning light.</li>
+          <li><strong>WARNING SIGNS vs. DIAGNOSIS:</strong> Dashboard lights, steam, or noises are warning signs—pull over safely first and verify exact torque/fluid specs against your model's official Isuzu Service Manual.</li>
         </ul>
       </div>
 
-      <div id="emergencyContainer" class="cards-grid"></div>
+      <!-- Emergency Quick Filter & Search Toolbar -->
+      <div class="search-toolbar" style="margin-bottom: 14px;">
+        <input type="search" id="emergencySearchInput" class="input-control" placeholder="Search emergency guides (e.g., overheating, brake, blowout, battery, won't start, smoke)..." aria-label="Search emergency guides" />
+        <select id="emergencyCategorySelect" class="select-control" aria-label="Filter emergency category">
+          <option value="all">All Emergency Guides (1–7)</option>
+          <option value="overheating">1. Engine Overheating</option>
+          <option value="brakes">2. Brake Failure</option>
+          <option value="tire">3. Tire Blowout</option>
+          <option value="battery">4. Battery Failure</option>
+          <option value="nostart">5. Engine Won't Start</option>
+          <option value="smoke">6. Smoke / Burning Smell</option>
+          <option value="breakdown">7. Roadside Breakdown Steps</option>
+        </select>
+      </div>
+
+      <!-- Expandable Emergency Guides Container (Populated by JS + Static HTML Fallback) -->
+      <div id="emergencyContainer" class="cards-grid" style="margin-bottom: 16px;">
+        <noscript>
+          <article class="card"><h3 class="card-title">Static Emergency Fallback</h3><p>Pull over safely, turn on hazard lights, deploy Early Warning Device (EWD), and call roadside assistance.</p></article>
+        </noscript>
+      </div>
+
+      <!-- Tools 8, 9 & 10: Emergency Contacts, Preparation Checklist & Incident Notes -->
+      <div class="cards-grid" style="margin-bottom: 16px;">
+        <!-- Tool 8: Emergency Contact Information -->
+        <article class="card" id="emergencyContactsCard">
+          <div class="card-header">
+            <div>
+              <span class="badge badge-danger">Tool 8 · Quick Dial</span>
+              <h3 class="card-title" style="margin-top: 6px;">Emergency Contact Directory</h3>
+            </div>
+          </div>
+          <ul class="task-list" style="margin-bottom: 12px;">
+            <li class="task-item"><div class="task-label"><span class="task-title">Philippine National Emergency Hotline: 911</span><span class="task-meta">Police, Fire, Medical &amp; Rescue (<a href="tel:911">Tap to Call 911</a>)</span></div></li>
+            <li class="task-item"><div class="task-label"><span class="task-title">MMDA Metro Manila Traffic / Roadside: 136</span><span class="task-meta">Metro Manila towing &amp; road incident response (<a href="tel:136">Tap to Call 136</a>)</span></div></li>
+            <li class="task-item"><div class="task-label"><span class="task-title">NLEX / SCTEX Hotline: (02) 8580-8910 | SLEX: (02) 8584-4389</span><span class="task-meta">Expressway patrol &amp; emergency assistance</span></div></li>
+          </ul>
+          <form id="emergencyContactForm" class="form-grid">
+            <div class="form-group">
+              <label for="emContactName">Personal Mechanic / Tow / Insurance Name</label>
+              <input type="text" id="emContactName" class="input-control" placeholder="e.g., Kuya Ben Diesel Mechanic / AAP Tow" required />
+            </div>
+            <div class="form-group">
+              <label for="emContactPhone">Phone Number</label>
+              <input type="tel" id="emContactPhone" class="input-control" placeholder="e.g., 09171234567" required />
+            </div>
+            <div class="responsive-btn-grid full-span">
+              <button type="submit" class="btn btn-primary btn-sm">Save Emergency Contact</button>
+            </div>
+          </form>
+          <ul id="customEmergencyContactsList" class="task-list" style="margin-top: 10px;"></ul>
+        </article>
+
+        <!-- Tool 9: Vehicle Emergency Preparation Checklist -->
+        <article class="card" id="emergencyPrepCard">
+          <div class="card-header">
+            <div>
+              <span class="badge badge-success" id="emPrepBadge">Tool 9 · Trunk Readiness</span>
+              <h3 class="card-title" style="margin-top: 6px;">Vehicle Emergency Preparation Checklist</h3>
+            </div>
+            <button type="button" id="resetEmPrepBtn" class="btn btn-outline btn-sm">Reset</button>
+          </div>
+          <p class="muted-text" style="margin-bottom: 10px;">Check off items stored inside your Crosswind before traveling:</p>
+          <ul id="emergencyPrepList" class="task-list"></ul>
+        </article>
+      </div>
+
+      <!-- Tool 10: Emergency Incident Notes & History -->
+      <article class="card" id="emergencyIncidentCard" style="margin-bottom: 16px;">
+        <div class="card-header">
+          <div>
+            <span class="badge badge-warn">Tool 10 · Offline Incident Log</span>
+            <h3 class="card-title" style="margin-top: 6px;">Emergency Incident Notes &amp; History</h3>
+          </div>
+          <button type="button" id="clearEmIncidentsBtn" class="btn btn-outline btn-sm">Clear Notes</button>
+        </div>
+        <form id="emergencyIncidentForm" class="form-grid" style="margin-bottom: 12px;">
+          <div class="form-group">
+            <label for="emIncidentDate">Incident Date</label>
+            <input type="date" id="emIncidentDate" class="input-control" required />
+          </div>
+          <div class="form-group">
+            <label for="emIncidentOdo">Odometer at Incident (km)</label>
+            <input type="number" id="emIncidentOdo" class="input-control" placeholder="e.g., 132450" min="0" />
+          </div>
+          <div class="form-group">
+            <label for="emIncidentCategory">Warning Sign / Category</label>
+            <select id="emIncidentCategory" class="select-control">
+              <option value="Engine Overheating Warning">Engine Overheating Warning</option>
+              <option value="Brake System Warning">Brake System Warning</option>
+              <option value="Tire Blowout / Flat">Tire Blowout / Flat</option>
+              <option value="Battery / Charging Failure">Battery / Charging Failure</option>
+              <option value="Engine Won't Start">Engine Won't Start</option>
+              <option value="Smoke / Burning Smell">Smoke / Burning Smell</option>
+              <option value="Roadside Breakdown / Tow">Roadside Breakdown / Tow</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="emIncidentNotes">What Happened &amp; Action Taken</label>
+            <input type="text" id="emIncidentNotes" class="input-control" placeholder="e.g., Temp rose on SLEX climb; pulled over, cooled 40 min, found loose fan belt" required />
+          </div>
+          <div class="responsive-btn-grid full-span">
+            <button type="submit" class="btn btn-primary">Save Incident Note</button>
+          </div>
+        </form>
+        <ul id="emergencyIncidentList" class="task-list"></ul>
+      </article>
+
+      <!-- Bottom Navigation Helpers inside Emergency Center -->
+      <div class="responsive-btn-grid">
+        <button type="button" id="emergencyBackToTopBtn" class="btn btn-outline">↑ Back to Top</button>
+        <button type="button" class="btn btn-primary" data-jump="dashboard">← Back to Dashboard</button>
+      </div>
     </section>
   </main>
 
@@ -491,6 +617,6 @@
   <!-- Toast Notification -->
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
-  <script src="./script.js?v=5" defer></script>
+  <script src="./script.js?v=6" defer></script>
 </body>
 </html>

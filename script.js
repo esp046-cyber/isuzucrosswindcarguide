@@ -221,59 +221,104 @@ const FUSE_MAP = [
 
 const EMERGENCY_GUIDES = [
   {
-    title: "1. Engine Overheating Emergency",
-    badge: "Immediate Action",
+    id: "overheating",
+    title: "1. Engine Overheating Emergency Guide",
+    badge: "Critical Warning · Stop Safely",
+    warningSign: "Warning Sign: Temperature needle climbing past 1/2 mark, loss of A/C cooling, or steam from hood.",
     steps: [
-      "Switch OFF the A/C immediately and turn cabin heater blower to MAX (helps draw heat from coolant).",
-      "Pull safely off the road, shift to Neutral/Park, and let engine idle for 1–2 minutes if coolant is not spraying out; shut off engine if gauge hits Red.",
-      "DO NOT open the radiator cap while hot. Wait at least 30–45 minutes until upper hose is cool to the touch before inspecting coolant."
+      "Turn OFF the air conditioning immediately to reduce engine load, and turn the cabin heater fan to MAX to draw heat away from the engine.",
+      "Signal and pull safely off the road onto level ground. Shift to Neutral/Park and engage the handbrake.",
+      "If steam or coolant is spraying—or if the needle enters the Red zone—shut the engine OFF immediately.",
+      "SAFETY RULE: NEVER open the radiator cap while the engine is hot. Wait 30–45 minutes until the upper radiator hose feels cool to the touch.",
+      "Once cool, inspect the coolant overflow tank, check for broken V-belts, and call roadside assistance/towing if coolant is empty or leaking."
     ]
   },
   {
-    title: "2. Brake Failure / Spongy Pedal Response",
-    badge: "Safety Critical",
+    id: "brakes",
+    title: "2. Brake Failure Emergency Guide",
+    badge: "Critical Safety · Do Not Drive",
+    warningSign: "Warning Sign: Brake pedal sinks to the floor, feels unusually hard (vacuum loss), or red BRAKE warning lamp illuminates.",
     steps: [
-      "Pump the brake pedal rapidly 3–4 times to build residual hydraulic pressure.",
-      "Downshift progressively to lower gears (4th -> 3rd -> 2nd; or D -> 2 -> L on Automatic) to use diesel engine braking.",
-      "Gradually pull the handbrake/parking brake while holding the release button so rear wheels do not lock abruptly; steer toward a safe shoulder."
+      "Stay calm, turn on hazard lights, and pump the brake pedal firmly 3–4 times to build any remaining hydraulic pressure.",
+      "Downshift progressively to lower gears (Manual: 4th -> 3rd -> 2nd; Automatic: D -> 2 -> L) to slow the Crosswind using diesel engine compression braking.",
+      "Apply the handbrake/parking brake gradually while keeping the release button pressed so the rear tires do not lock and skid.",
+      "Steer safely onto the shoulder or an uphill escape area.",
+      "SAFETY RULE: NEVER continue driving a vehicle with suspected brake failure. Inspect brake fluid reservoir level and rear alternator vacuum pump hoses, and arrange a flatbed tow."
     ]
   },
   {
-    title: "3. Tire Blowout at Highway Speed",
-    badge: "Control Protocol",
+    id: "tire",
+    title: "3. Tire Blowout Emergency Guide",
+    badge: "Critical Control Protocol",
+    warningSign: "Warning Sign: Loud bang, sudden steering pull to one side, or heavy thumping vibration.",
     steps: [
-      "Grip the steering wheel firmly with both hands—DO NOT slam the brakes.",
-      "Ease off the accelerator smoothly and allow the vehicle to decelerate naturally until stable.",
-      "Turn on hazard lights, pull onto level ground, chock the opposite diagonal wheel, and use jack stands/solid base before changing the tire."
+      "Grip the steering wheel firmly with both hands and keep the vehicle pointed straight—DO NOT slam on the brakes.",
+      "Lift your foot off the accelerator smoothly and let the vehicle coast down naturally until speed drops below 30 km/h.",
+      "Turn on hazard flashers, pull well off the traffic lane onto firm, level ground, and set your Early Warning Device (EWD) 4–10 meters behind the vehicle.",
+      "Place wheel chocks against the tire diagonally opposite the flat tire before lifting.",
+      "SAFETY RULE: NEVER crawl or place any body part underneath a vehicle supported only by a jack. Always use jack stands or place the spare wheel under the frame rail as a backup."
     ]
   },
   {
-    title: "4. Engine Won't Start / Dead Battery",
+    id: "battery",
+    title: "4. Battery Failure Emergency Guide",
+    badge: "Electrical · 12V System",
+    warningSign: "Warning Sign: Slow cranking, rapid clicking from starter, dim dome/headlights, or red battery charge warning light while driving.",
+    steps: [
+      "Turn off headlights, A/C, stereo, and 12V accessories immediately to conserve remaining battery voltage.",
+      "Inspect the 3SMF / N70ZL battery terminals for loose clamps or white/green corrosion.",
+      "For jump-starting: connect Red (+) clamp to dead battery (+), Red (+) to donor battery (+), Black (-) to donor battery (-), and Black (-) to an unpainted metal engine bracket on the Crosswind (away from the battery).",
+      "Once started, let the engine idle for 15–20 minutes and have alternator charging voltage (13.8V–14.4V spec) tested."
+    ]
+  },
+  {
+    id: "nostart",
+    title: "5. Engine Won't Start Troubleshooting",
     badge: "No-Start Triage",
+    warningSign: "Warning Sign: Engine cranks normally without firing, or glow plug indicator fails to illuminate.",
     steps: [
-      "Clicking sound only: Weak battery or loose terminal. Clean terminals and jump-start (Red + to +, Black - to engine block ground).",
-      "Cranks fast but won't fire: Pump the fuel filter hand primer 15 times until stiff, wait for glow indicator, and crank.",
-      "A/T shifter stuck in Park: Insert key/screwdriver into the Shift Lock override slot beside the gear selector."
+      "Check fuel gauge and verify transmission is firmly in Park (P) or Neutral (N) on Automatic models.",
+      "Turn key to ON and watch the amber Glow Plug coil light (3–6 seconds). If it does not light, check the 60A GLOW fusible link in the engine bay.",
+      "Air in diesel line check: Open the hood and pump the black hand primer on top of the fuel filter 15–20 times until firm, then crank the engine.",
+      "If the engine still cranks without starting after priming, stop cranking (to protect the starter motor) and call a diesel technician."
     ]
   },
   {
-    title: "5. Smoke or Electrical Burning Smell",
-    badge: "Fire Prevention",
+    id: "smoke",
+    title: "6. Smoke or Burning Smell Emergency Guide",
+    badge: "Critical Fire Risk",
+    warningSign: "Warning Sign: Acrid electrical burning odor, melting plastic smell, or visible smoke from hood or under-dash.",
     steps: [
-      "Pull over immediately, turn ignition OFF, and evacuate all passengers away from traffic.",
-      "If safe and smoke is minor, disconnect the negative (-) battery terminal with a 10mm wrench.",
-      "Never open the hood fully if flames are visible—use an ABC fire extinguisher aimed at the base of the fire."
+      "Signal and pull over immediately away from dry grass, fuel stations, or buildings.",
+      "Turn the ignition key OFF immediately and evacuate all passengers to a safe distance upwind.",
+      "If smoke is minor and no flames are visible, unlatch the hood and disconnect the negative (-) battery terminal using a 10mm wrench.",
+      "SAFETY RULE: NEVER open the hood wide if flames are present—oxygen rush will flare the fire. Aim an ABC fire extinguisher through the grille or hood gap at the base of the fire and call 911."
     ]
   },
   {
-    title: "6. Roadside Breakdown Kit Checklist",
-    badge: "Trunk Essentials",
+    id: "breakdown",
+    title: "7. Roadside Breakdown Action Checklist",
+    badge: "Step-by-Step Protocol",
+    warningSign: "Warning Sign: Any sudden mechanical loss of power, loud metallic knocking, or red oil pressure lamp.",
     steps: [
-      "Early Warning Device (EWD triangles), high-visibility vest, LED flashlight, and ABC fire extinguisher.",
-      "Heavy-duty jumper cables, 12V tire inflator, tire plug kit, wheel chocks, and hydraulic bottle jack + lug wrench.",
-      "Spare V-belt set (8-97180199-0), 2L premixed coolant, 1L 15W-40 engine oil, 10mm/12mm/14mm wrenches, and spare 10A/15A/20A fuses."
+      "1. Activate hazard warning lights immediately and steer smoothly onto the rightmost shoulder or emergency bay.",
+      "2. Shift to Park (A/T) or 1st/Reverse gear (M/T), pull the handbrake firmly, and turn wheels away from traffic.",
+      "3. Have passengers exit on the side away from traffic and stand behind a guardrail if available.",
+      "4. Place your Early Warning Device (EWD) reflector triangle behind the vehicle to alert approaching drivers.",
+      "5. Log the incident symptoms & odometer in Tool 10 below and call your saved mechanic, expressway patrol, or 911."
     ]
   }
+];
+
+const EMERGENCY_PREP_ITEMS = [
+  { id: "ep1", title: "Early Warning Device (EWD Red & Yellow Triangles)", meta: "LTO mandatory roadside visibility reflector" },
+  { id: "ep2", title: "ABC Dry-Chemical Fire Extinguisher (1–2 kg)", meta: "Check pressure gauge needle is in the green zone" },
+  { id: "ep3", title: "Hydraulic Bottle Jack, Lug Wrench & Wheel Chocks", meta: "Verify spare tire under rear floor or rear door is inflated to 35–40 psi" },
+  { id: "ep4", title: "Heavy-Duty Jumper Cables & LED Flashlight", meta: "Rated 400A+ for 2.5L diesel cold cranking" },
+  { id: "ep5", title: "12V Portable Tire Inflator & Tire Plug Repair Kit", meta: "Plugs into cabin 15A CIG/ACC socket" },
+  { id: "ep6", title: "Spare V-Belt Set, 2L Premixed Coolant & 1L 15W-40 Oil", meta: "Verify exact belt length against your Crosswind variant manual" },
+  { id: "ep7", title: "Basic Tool Roll (10mm, 12mm, 14mm Wrenches, Pliers, Spare Fuses)", meta: "10A, 15A, 20A, 30A blade fuses + electrical tape" },
+  { id: "ep8", title: "First-Aid Kit, Bottled Water & Rain Poncho", meta: "Essential for highway delays or provincial travel" }
 ];
 
 // Persistent State
@@ -286,6 +331,9 @@ let state = {
   fuelLogs: JSON.parse(localStorage.getItem("cg_fuel_logs") || "[]"),
   resaleLogs: JSON.parse(localStorage.getItem("cg_resale_logs") || "[]"),
   batteryStatus: localStorage.getItem("cg_battery_status") || "Not measured",
+  emergencyContacts: JSON.parse(localStorage.getItem("cg_em_contacts") || "[]"),
+  emergencyPrep: JSON.parse(localStorage.getItem("cg_em_prep") || "{}"),
+  emergencyIncidents: JSON.parse(localStorage.getItem("cg_em_incidents") || "[]"),
   theme: localStorage.getItem("cg_theme") || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light")
 };
 
@@ -720,7 +768,10 @@ document.getElementById("exportJsonBtn").addEventListener("click", () => {
     logs: state.logs,
     fuelLogs: state.fuelLogs,
     resaleLogs: state.resaleLogs,
-    batteryStatus: state.batteryStatus
+    batteryStatus: state.batteryStatus,
+    emergencyContacts: state.emergencyContacts,
+    emergencyPrep: state.emergencyPrep,
+    emergencyIncidents: state.emergencyIncidents
   };
   const blob = new Blob([JSON.stringify(backupData, null, 2)], { type: "application/json" });
   const url = URL.createObjectURL(blob);
@@ -744,6 +795,9 @@ document.getElementById("importJsonInput").addEventListener("change", (e) => {
       if (imported.fuelLogs) state.fuelLogs = imported.fuelLogs;
       if (imported.resaleLogs) state.resaleLogs = imported.resaleLogs;
       if (imported.batteryStatus) state.batteryStatus = imported.batteryStatus;
+      if (imported.emergencyContacts) state.emergencyContacts = imported.emergencyContacts;
+      if (imported.emergencyPrep) state.emergencyPrep = imported.emergencyPrep;
+      if (imported.emergencyIncidents) state.emergencyIncidents = imported.emergencyIncidents;
       if (typeof imported.currentOdo === "number") {
         state.currentOdo = imported.currentOdo;
         currentOdoInput.value = state.currentOdo;
@@ -754,6 +808,10 @@ document.getElementById("importJsonInput").addEventListener("change", (e) => {
       localStorage.setItem("cg_fuel_logs", JSON.stringify(state.fuelLogs));
       localStorage.setItem("cg_resale_logs", JSON.stringify(state.resaleLogs));
       localStorage.setItem("cg_battery_status", state.batteryStatus);
+      localStorage.setItem("cg_em_contacts", JSON.stringify(state.emergencyContacts));
+      localStorage.setItem("cg_em_prep", JSON.stringify(state.emergencyPrep));
+      localStorage.setItem("cg_em_incidents", JSON.stringify(state.emergencyIncidents));
+      renderEmergencyCenter();
       renderChecklists();
       renderServiceLogs();
       renderFuelLogs();
@@ -960,20 +1018,184 @@ function renderSpecs() {
 }
 
 function renderEmergencyCenter() {
-  document.getElementById("emergencyContainer").innerHTML = EMERGENCY_GUIDES.map(e => `
-    <article class="card">
-      <div class="card-header">
-        <div>
-          <span class="badge">${e.badge}</span>
-          <h3 class="card-title" style="margin-top:6px;">${e.title}</h3>
+  const qEl = document.getElementById("emergencySearchInput");
+  const catEl = document.getElementById("emergencyCategorySelect");
+  const q = qEl ? qEl.value.trim().toLowerCase() : "";
+  const cat = catEl ? catEl.value : "all";
+
+  const matches = EMERGENCY_GUIDES.filter(e => {
+    const matchCat = cat === "all" || e.id === cat;
+    const matchQ = !q ||
+      e.title.toLowerCase().includes(q) ||
+      e.warningSign.toLowerCase().includes(q) ||
+      e.steps.some(st => st.toLowerCase().includes(q));
+    return matchCat && matchQ;
+  });
+
+  const container = document.getElementById("emergencyContainer");
+  if (matches.length === 0) {
+    container.innerHTML = `<article class="card"><p class="card-title">No matching emergency guide found</p><p class="muted-text">Reset the category dropdown to "All Emergency Guides" or clear the search box.</p></article>`;
+  } else {
+    container.innerHTML = matches.map((e, idx) => `
+      <article class="card">
+        <div class="card-header">
+          <div>
+            <span class="badge badge-danger">${e.badge}</span>
+            <h3 class="card-title" style="margin-top:6px;">${e.title}</h3>
+          </div>
         </div>
+        <p style="font-size:0.8125rem;margin:0 0 10px;color:var(--text-muted);"><strong>${e.warningSign}</strong></p>
+        <details class="em-details" ${idx === 0 || cat !== "all" || q ? "open" : ""}>
+          <summary><span>Step-by-Step Safety Procedure (${e.steps.length} steps)</span><span aria-hidden="true">▾</span></summary>
+          <ol class="em-step-list">
+            ${e.steps.map(s => `<li>${s}</li>`).join("")}
+          </ol>
+        </details>
+      </article>
+    `).join("");
+  }
+
+  renderEmergencyContacts();
+  renderEmergencyPrep();
+  renderEmergencyIncidents();
+}
+
+function renderEmergencyContacts() {
+  const listEl = document.getElementById("customEmergencyContactsList");
+  if (!listEl) return;
+  if (state.emergencyContacts.length === 0) {
+    listEl.innerHTML = `<li class="task-item"><div class="task-label"><span class="task-title">No personal contacts saved yet</span><span class="task-meta">Save your trusted Isuzu diesel mechanic, towing service, or insurance hotline above for offline one-tap calling.</span></div></li>`;
+    return;
+  }
+  listEl.innerHTML = state.emergencyContacts.map((c, idx) => `
+    <li class="task-item">
+      <div class="task-label">
+        <span class="task-title">${c.name}</span>
+        <span class="task-meta"><a href="tel:${c.phone.replace(/[^0-9+]/g, "")}">${c.phone}</a></span>
       </div>
-      <ul class="task-list">
-        ${e.steps.map(s => `<li class="task-item"><div class="task-label"><span class="task-meta" style="color:var(--text);font-size:0.85rem;">${s}</span></div></li>`).join("")}
-      </ul>
-    </article>
+      <button type="button" class="btn btn-outline btn-sm" data-del-em-contact="${idx}" aria-label="Delete contact">Delete</button>
+    </li>
   `).join("");
 }
+
+function renderEmergencyPrep() {
+  const listEl = document.getElementById("emergencyPrepList");
+  const badgeEl = document.getElementById("emPrepBadge");
+  if (!listEl) return;
+  let checkedCount = 0;
+  listEl.innerHTML = EMERGENCY_PREP_ITEMS.map(item => {
+    const isChecked = !!state.emergencyPrep[item.id];
+    if (isChecked) checkedCount++;
+    return `
+      <li class="task-item ${isChecked ? "done" : ""}">
+        <input type="checkbox" class="task-checkbox" id="${item.id}" data-em-prep="${item.id}" ${isChecked ? "checked" : ""} />
+        <label class="task-label" for="${item.id}">
+          <span class="task-title">${item.title}</span>
+          <span class="task-meta">${item.meta}</span>
+        </label>
+      </li>
+    `;
+  }).join("");
+  if (badgeEl) {
+    const allReady = checkedCount === EMERGENCY_PREP_ITEMS.length;
+    badgeEl.className = allReady ? "badge badge-success" : "badge badge-warn";
+    badgeEl.textContent = allReady ? `Verified Ready (${checkedCount}/${EMERGENCY_PREP_ITEMS.length})` : `${checkedCount}/${EMERGENCY_PREP_ITEMS.length} Packed`;
+  }
+}
+
+function renderEmergencyIncidents() {
+  const listEl = document.getElementById("emergencyIncidentList");
+  if (!listEl) return;
+  if (state.emergencyIncidents.length === 0) {
+    listEl.innerHTML = `<li class="task-item"><div class="task-label"><span class="task-title">No emergency incidents recorded</span><span class="task-meta">Use the form above to log roadside warning signs, breakdowns, or temporary fixes offline.</span></div></li>`;
+    return;
+  }
+  listEl.innerHTML = state.emergencyIncidents.map((inc, idx) => `
+    <li class="task-item">
+      <div class="task-label">
+        <span class="task-title">${inc.category} (${inc.date}${inc.odo ? ` · ${Number(inc.odo).toLocaleString()} km` : ""})</span>
+        <span class="task-meta">${inc.notes}</span>
+      </div>
+      <button type="button" class="btn btn-outline btn-sm" data-del-em-incident="${idx}" aria-label="Delete incident note">Delete</button>
+    </li>
+  `).join("");
+}
+
+// Emergency Center Event Listeners
+document.getElementById("emergencySearchInput")?.addEventListener("input", renderEmergencyCenter);
+document.getElementById("emergencyCategorySelect")?.addEventListener("change", renderEmergencyCenter);
+document.getElementById("printEmergencyBtn")?.addEventListener("click", () => window.print());
+document.getElementById("emergencyBackToTopBtn")?.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
+
+document.getElementById("emergencyContactForm")?.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const name = document.getElementById("emContactName").value.trim();
+  const phone = document.getElementById("emContactPhone").value.trim();
+  if (!name || !phone) return;
+  state.emergencyContacts.unshift({ name, phone });
+  localStorage.setItem("cg_em_contacts", JSON.stringify(state.emergencyContacts));
+  document.getElementById("emContactName").value = "";
+  document.getElementById("emContactPhone").value = "";
+  renderEmergencyContacts();
+  showToast("Emergency contact saved offline!");
+});
+
+document.getElementById("customEmergencyContactsList")?.addEventListener("click", (e) => {
+  const btn = e.target.closest("[data-del-em-contact]");
+  if (!btn) return;
+  state.emergencyContacts.splice(Number(btn.dataset.delEmContact), 1);
+  localStorage.setItem("cg_em_contacts", JSON.stringify(state.emergencyContacts));
+  renderEmergencyContacts();
+  showToast("Contact removed.");
+});
+
+document.getElementById("emergencyPrepList")?.addEventListener("change", (e) => {
+  if (e.target.matches("[data-em-prep]")) {
+    state.emergencyPrep[e.target.dataset.emPrep] = e.target.checked;
+    localStorage.setItem("cg_em_prep", JSON.stringify(state.emergencyPrep));
+    renderEmergencyPrep();
+  }
+});
+
+document.getElementById("resetEmPrepBtn")?.addEventListener("click", () => {
+  state.emergencyPrep = {};
+  localStorage.removeItem("cg_em_prep");
+  renderEmergencyPrep();
+  showToast("Emergency kit checklist reset.");
+});
+
+const emIncidentDateInput = document.getElementById("emIncidentDate");
+if (emIncidentDateInput) emIncidentDateInput.value = new Date().toISOString().split("T")[0];
+
+document.getElementById("emergencyIncidentForm")?.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const date = document.getElementById("emIncidentDate").value;
+  const odo = document.getElementById("emIncidentOdo").value;
+  const category = document.getElementById("emIncidentCategory").value;
+  const notes = document.getElementById("emIncidentNotes").value.trim();
+  if (!notes) return;
+  state.emergencyIncidents.unshift({ date, odo, category, notes });
+  localStorage.setItem("cg_em_incidents", JSON.stringify(state.emergencyIncidents));
+  document.getElementById("emIncidentNotes").value = "";
+  renderEmergencyIncidents();
+  showToast("Emergency incident note saved!");
+});
+
+document.getElementById("emergencyIncidentList")?.addEventListener("click", (e) => {
+  const btn = e.target.closest("[data-del-em-incident]");
+  if (!btn) return;
+  state.emergencyIncidents.splice(Number(btn.dataset.delEmIncident), 1);
+  localStorage.setItem("cg_em_incidents", JSON.stringify(state.emergencyIncidents));
+  renderEmergencyIncidents();
+  showToast("Incident note deleted.");
+});
+
+document.getElementById("clearEmIncidentsBtn")?.addEventListener("click", () => {
+  state.emergencyIncidents = [];
+  localStorage.removeItem("cg_em_incidents");
+  renderEmergencyIncidents();
+  showToast("Emergency incident history cleared.");
+});
 
 // Navigation Routing (9 Views)
 function switchView(viewName, updateHash = true) {
@@ -1056,7 +1278,7 @@ window.addEventListener("offline", updateOnlineStatus);
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", async () => {
     try {
-      const reg = await navigator.serviceWorker.register("./service-worker.js?v=5");
+      const reg = await navigator.serviceWorker.register("./service-worker.js?v=6");
       reg.addEventListener("updatefound", () => {
         const nw = reg.installing;
         if (!nw) return;

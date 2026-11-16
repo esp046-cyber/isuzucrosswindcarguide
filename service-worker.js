@@ -1,14 +1,14 @@
-const CACHE_NAME = "crosswind-garage-v5.0.0";
+const CACHE_NAME = "crosswind-garage-v6.0.0";
 const ASSETS_TO_CACHE = [
   "./",
   "./index.html",
-  "./style.css?v=5",
-  "./script.js?v=5",
-  "./manifest.json?v=5",
+  "./style.css?v=6",
+  "./script.js?v=6",
+  "./manifest.json?v=6",
   "./offline.html",
-  "./favicon.ico?v=5",
-  "./icon-192.png?v=5",
-  "./icon-512.png?v=5",
+  "./favicon.ico?v=6",
+  "./icon-192.png?v=6",
+  "./icon-512.png?v=6",
   "./assets/og-image.png"
 ];
 
